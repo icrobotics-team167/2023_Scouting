@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "element-ui": "^2.4.5",
+    "firebase": "^9.16.0"
+  },
+  "devDependencies": {
+    "babel-plugin-component": "^1.1.1",
+    "vue-cli-plugin-element": "~1.0.1"
+  },
+  "babel": {
+    "plugins": [
+      [
+        "component",
+        {
+          "libraryName": "element-ui",
+          "styleLibraryName": "theme-chalk"
+        }
+      ]
+    ]
+  }
+}
