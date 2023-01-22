@@ -56,24 +56,11 @@
     </el-table>
   </div>
 </template>
-
-<script>
-
-export default {
-  name: 'app',
-  data(){
-    return {
-      name: '',
-      employeesData: []
-    }
-  }
-}
-</script>
-
 <script>
 import firebase from "./firebaseInit";
 const db = firebase.firestore();
 export default {
+  name: 'app',
   data() {
     return {
       name: "",
