@@ -1,5 +1,8 @@
 # scouting-app
 
+## Access scouting app
+https://scoutingapp-ee2cf.firebaseapp.com
+
 ## Project setup
 ```
 npm install
