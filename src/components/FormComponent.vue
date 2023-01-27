@@ -59,10 +59,10 @@
   </div>
 </template>
 <script>
-import firebase from "./firebaseInit";
+import firebase from "../firebaseInit";
 const db = firebase.firestore();
 export default {
-  name:"app",
+  name: 'FormComponent',
   data() {
     return {
       form: {

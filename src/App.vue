@@ -1,36 +1,27 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <div>
-      <p>
-        If Element is successfully added to this project, you'll see an
-        <code v-text="'<el-button>'"></code>
-        below
-      </p>
-      <el-button>el-button</el-button>
-    </div>
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+      <el-tab-pane label="Forms" name="0"><FormComponent></FormComponent></el-tab-pane>
+      <el-tab-pane label="Auto" name="1"><AutoTable></AutoTable></el-tab-pane>
+      <el-tab-pane label="Teleop" name="2"><TeleopTable></TeleopTable></el-tab-pane>
+      <el-tab-pane label="Graphs" name="3"><GraphComponent></GraphComponent></el-tab-pane>
+    </el-tabs>
   </div>
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import FormComponent from './components/FormComponent.vue';
+import AutoTable from './components/AutoTable.vue';
+import TeleopTable from './components/TeleopTable.vue';
+import GraphComponent from './components/GraphComponent.vue';
 
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-    HelloWorld
+    FormComponent,
+    AutoTable,
+    TeleopTable,
+    GraphComponent
   }
-}
+};
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
