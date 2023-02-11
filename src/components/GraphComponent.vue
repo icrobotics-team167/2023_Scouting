@@ -1,10 +1,10 @@
 <template>
-  <div>
-    This is a placeholder for graphs
-  </div>
+    <div>
+        This is a placeholder for graphs
+    </div>
 </template>
 <script>
 export default {
-  name: 'GraphComponent'
-}
+    name: 'GraphComponent'
+  }
 </script>

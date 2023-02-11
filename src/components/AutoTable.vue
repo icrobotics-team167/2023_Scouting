@@ -1,21 +1,43 @@
 <template>
-    <div>
-      <h1>
-      Auto Data
-    </h1>
-    <el-table :data="tableData" style="width: 100%;">
-      <el-table-column label="Team Number" prop="number"> </el-table-column>
-      <el-table-column label="Auto: Moved" prop="moveAuto"> </el-table-column>
-      <el-table-column label="Auto: Scored High" prop="autoHigh"> </el-table-column>
-      <el-table-column label="Auto: Scored Mid" prop="autoMid"> </el-table-column>
-      <el-table-column label="Auto: Scored Low" prop="autoLow"> </el-table-column>
-      <el-table-column label="Auto: Dock/Engage" prop="engageStatusAuto"> </el-table-column> 
-
-    </el-table>
-  </div>
+    <v-table fixed-header>
+    <thead>
+      <tr>
+        <th class="text-left">
+         Team Number
+        </th>
+        <th class="text-left">
+          Auto: Moved
+        </th>
+        <th class="text-left">
+          Auto: Scored High
+        </th>
+        <th class="text-left">
+          Auto: Scored Mid
+        </th>
+        <th class="text-left">
+          Auto: Scored Low
+        </th>
+        <th class="text-left">
+          Auto: Dock/Engage
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        v-for="item in tableData"
+        :key="item.name"
+      >
+        <td>{{ item.number }}</td>
+        <td>{{ item.moveAuto }}</td>
+        <td>{{ item.autoHigh }}</td>
+        <td>{{ item.autoMid }}</td>
+        <td>{{ item.autoLow }}</td>
+        <td>{{ item.engageStatusAuto }}</td>
+      </tr>
+    </tbody>
+  </v-table>
 </template>
 <script>
-
 import firebase from "../firebaseInit";
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
@@ -53,15 +75,12 @@ getMatchData(db).then((querySnapshot) => {
   
 })
 
-
 export default {
-
-  name: 'autoTable',
-  data() {
+    name: 'AutoTable',
+    data() {
     return {
       tableData
     };
   }
-
-}
+  }
 </script>

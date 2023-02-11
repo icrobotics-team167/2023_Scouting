@@ -1,28 +1,57 @@
 <template>
-  <div>
-    <h1>
-      Teleop and Postgame Data
-    </h1>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column label="Team Number" prop="number"> </el-table-column>
-      <el-table-column label="Teleop: Scored High" prop="teleopHigh"> </el-table-column>
-      <el-table-column label="Teleop: Scored Mid" prop="teleopMid"> </el-table-column>
-      <el-table-column label="Teleop: Scored Low" prop="teleopLow"> </el-table-column>
-      <el-table-column label="Teleop: Dock/Engage" prop="engageStatus"> </el-table-column>
-      <el-table-column label="Teleop: Parked" prop="parkTeleop"> </el-table-column>
-      <el-table-column label="Postgame: # of Links" prop="numLinks"> </el-table-column>
-      <el-table-column label="Postgame: Coop Bonus" prop="coopBonus"> </el-table-column>
-    </el-table>
-  </div>
+    <v-table fixed-header>
+    <thead>
+      <tr>
+        <th class="text-left">
+         Team Number
+        </th>
+        <th class="text-left">
+          Teleop: Scored High
+        </th>
+        <th class="text-left">
+          Teleop: Scored Mid
+        </th>
+        <th class="text-left">
+          Teleop: Scored Low
+        </th>
+        <th class="text-left">
+          Teleop: Dock/Engage
+        </th>
+        <th class="text-left">
+          Teleop: Parked
+        </th>
+        <th class="text-left">
+          Post Game: # of Links
+        </th>
+        <th class="text-left">
+          Post Game: CoOp Bonus
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        v-for="item in tableData"
+        :key="item.name"
+      >
+        <td>{{ item.number }}</td>
+        <td>{{ item.teleopHigh }}</td>
+        <td>{{ item.teleopMid }}</td>
+        <td>{{ item.teleopLow }}</td>
+        <td>{{ item.engageStatus }}</td>
+        <td>{{ item.parkTeleop }}</td>
+        <td>{{ item.numLinks }}</td>
+        <td>{{ item.coopBonus }}</td>
+      </tr>
+    </tbody>
+  </v-table>
 </template>
 <script>
-
 import firebase from "../firebaseInit";
 import { getFirestore, collection, getDocs } from 'firebase/firestore/lite';
 
 const db = getFirestore(firebase);
 
-async function getmatchData(db) {
+async function getMatchData(db) {
   const matchDataCol = collection(db, 'matchData');
   const matchDataSnapshot = await getDocs(matchDataCol);
   const matchDataList = matchDataSnapshot.docs.map(doc => doc.data());
@@ -31,7 +60,7 @@ async function getmatchData(db) {
 
 let tableData = [];
 
-getmatchData(db).then((querySnapshot) => {
+getMatchData(db).then((querySnapshot) => {
   querySnapshot.forEach((doc) => {
     tableData.push({
       id: doc.id,
@@ -49,20 +78,15 @@ getmatchData(db).then((querySnapshot) => {
       numLinks: doc.numLinks,
       coopBonus: doc.coopBonus,
     });
-    
-  })
-  
-})
-
+  });
+});
 
 export default {
-
-  name: 'TeleopTable',
-  data() {
+    name: 'TeleopTable',
+    data() {
     return {
       tableData
     };
   }
-
 }
 </script>

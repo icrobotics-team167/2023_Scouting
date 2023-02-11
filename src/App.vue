@@ -1,27 +1,35 @@
 <template>
-  <div>
-    <el-tabs class="demo-tabs" >
-      <el-tab-pane label="Forms" name="0"><FormComponent></FormComponent></el-tab-pane>
-      <el-tab-pane label="Auto" name="1"><AutoTable></AutoTable></el-tab-pane>
-      <el-tab-pane label="Teleop" name="2"><TeleopTable></TeleopTable></el-tab-pane>
-      <el-tab-pane label="Graphs" name="3"><GraphComponent></GraphComponent></el-tab-pane>
-    </el-tabs>
-  </div>
+  <v-app id="inspire">
+    <v-navigation-drawer
+        expand-on-hover
+        rail
+      >
+        <v-list density="compact" nav>
+          <v-list-item prepend-icon="mdi-form-select" title="Form" value="form" to="/"></v-list-item>
+          <v-list-item prepend-icon="mdi-robot" title="Auto Data" value="auto" to="/auto"></v-list-item>
+          <v-list-item prepend-icon="mdi-human-queue" title="Teleop Data" value="teleop" to="/teleop"></v-list-item>
+          <v-list-item prepend-icon="mdi-chart-bar" title="Graphs" value="graph" to="/graph"></v-list-item>
+        </v-list>
+      </v-navigation-drawer>
+    <v-app-bar>
+      <v-toolbar-title>2023 Scouting App</v-toolbar-title>
+    </v-app-bar>
+    <v-main>
+      <v-container>
+        <router-view />
+      </v-container>
+    </v-main>
+    <v-footer class="d-flex flex-column">
+      <div class="px-4 py-2 bg-black text-center w-100">
+        {{ new Date().getFullYear() }} — <strong>167 Iowa City Robotics</strong>
+      </div>
+    </v-footer>
+  </v-app>
 </template>
+
 <script>
-
-import FormComponent from './components/FormComponent.vue';
-import AutoTable from './components/AutoTable.vue';
-import TeleopTable from './components/TeleopTable.vue';
-import GraphComponent from './components/GraphComponent.vue';
-
-export default {
-  name: 'App',
-  components: {
-    FormComponent,
-    AutoTable,
-    TeleopTable,
-    GraphComponent
+  export default {
+    name: 'App',
+    data: () => ({ drawer: null }),
   }
-};
 </script>
