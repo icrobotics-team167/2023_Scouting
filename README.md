@@ -1,4 +1,4 @@
-# scouting-app
+# 2023 Scouting App
 
 ## Access scouting app
 https://scouting.iowacityrobotics.org
