@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+    <el-tabs class="demo-tabs" >
       <el-tab-pane label="Forms" name="0"><FormComponent></FormComponent></el-tab-pane>
       <el-tab-pane label="Auto" name="1"><AutoTable></AutoTable></el-tab-pane>
       <el-tab-pane label="Teleop" name="2"><TeleopTable></TeleopTable></el-tab-pane>
