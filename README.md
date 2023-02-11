@@ -1,7 +1,7 @@
 # scouting-app
 
 ## Access scouting app
-https://scoutingapp-ee2cf.firebaseapp.com
+https://scouting.iowacityrobotics.org
 
 ## Project setup
 ```
