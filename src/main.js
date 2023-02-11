@@ -1,11 +1,11 @@
 import Vue from 'vue';
 import App from './App.vue';
-import VueRouter from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router';
 import FormComponent from './components/FormComponent.vue';
 import AutoTable from './components/AutoTable.vue';
 import TeleopTable from './components/TeleopTable.vue';
 import GraphComponent from './components/GraphComponent.vue';
-import vuetify from './plugins/vuetify'
+import './plugins/element.js'
 
 Vue.config.productionTip = false
 
@@ -16,20 +16,12 @@ const routes = [
   { path: '/graphs', component: GraphComponent }
 ];
 
-const router = new VueRouter({
+const router = createRouter({
+  history: createWebHistory(process.env.BASE_URL),
   routes: routes
-})
-
-Vue.use(VueRouter)
-
-Vue.component("FormComponent", FormComponent)
-Vue.component("AutoTable", AutoTable)
-Vue.component("TeleopTable", TeleopTable)
-Vue.component("GraphComponent", GraphComponent)
+});
 
 new Vue({
   render: h => h(App),
-  vuetify,
   router
 }).$mount('#app')
-

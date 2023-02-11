@@ -3,15 +3,15 @@
       <h1>
       Auto Data
     </h1>
-    <v-table :data="tableData" style="width: 100%;">
-      <td label="Team Number" prop="number"> </td>
-      <td label="Auto: Moved" prop="moveAuto"> </td>
-      <td label="Auto: Scored High" prop="autoHigh"> </td>
-      <td label="Auto: Scored Mid" prop="autoMid"> </td>
-      <td label="Auto: Scored Low" prop="autoLow"> </td>
-      <td label="Auto: Dock/Engage" prop="engageStatusAuto"> </td> 
+    <el-table :data="tableData" style="width: 100%;">
+      <el-table-column label="Team Number" prop="number"> </el-table-column>
+      <el-table-column label="Auto: Moved" prop="moveAuto"> </el-table-column>
+      <el-table-column label="Auto: Scored High" prop="autoHigh"> </el-table-column>
+      <el-table-column label="Auto: Scored Mid" prop="autoMid"> </el-table-column>
+      <el-table-column label="Auto: Scored Low" prop="autoLow"> </el-table-column>
+      <el-table-column label="Auto: Dock/Engage" prop="engageStatusAuto"> </el-table-column> 
 
-    </v-table>
+    </el-table>
   </div>
 </template>
 <script>

@@ -4,66 +4,66 @@
   <div>
     <h1>Match Data Input</h1>
 
-    <v-form ref="form" :model="form" label-width="220px">
+    <el-form ref="form" :model="form" label-width="220px">
       <h2>Auto Data</h2>
-      <v-model label="Team Number">
-        <v-input v-model="form.number"></v-input>
-      </v-model>
-      <v-model label="Moved in Auto?">
-        <v-input
+      <el-form-item label="Team Number">
+        <el-input v-model="form.number"></el-input>
+      </el-form-item>
+      <el-form-item label="Moved in Auto?">
+        <el-input
           v-model="form.moveAuto"
           placeholder="1 for yes, 0 for no"
-        ></v-input>
-      </v-model>
-      <v-model label="Times Scored High">
-        <v-input v-model="form.autoHigh"></v-input>
-      </v-model>
-      <v-model label="Times Scored Mid">
-        <v-input v-model="form.autoMid"></v-input>
-      </v-model>
-      <v-model label="Times Scored Low">
-        <v-input v-model="form.autoLow"></v-input>
-      </v-model>
-      <v-model label="Engaged/Docked Auto">
-        <v-input
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="Times Scored High">
+        <el-input v-model="form.autoHigh"></el-input>
+      </el-form-item>
+      <el-form-item label="Times Scored Mid">
+        <el-input v-model="form.autoMid"></el-input>
+      </el-form-item>
+      <el-form-item label="Times Scored Low">
+        <el-input v-model="form.autoLow"></el-input>
+      </el-form-item>
+      <el-form-item label="Engaged/Docked Auto">
+        <el-input
           v-model="form.engageStatusAuto"
           placeholder="2 for docked, 1 for engaged, 0 for neither"
-        ></v-input>
-      </v-model>
+        ></el-input>
+      </el-form-item>
 
       <h2>Teleop Data</h2>
-      <v-model label="Times Scored High">
-        <v-input v-model="form.teleopHigh"></v-input>
-      </v-model>
-      <v-model label="Times Scored Mid">
-        <v-input v-model="form.teleopMid"></v-input>
-      </v-model>
-      <v-model label="Times Scored Low">
-        <v-input v-model="form.teleopLow"></v-input>
-      </v-model>
-      <v-model label="Engaged/Docked Teleop">
-        <v-input
+      <el-form-item label="Times Scored High">
+        <el-input v-model="form.teleopHigh"></el-input>
+      </el-form-item>
+      <el-form-item label="Times Scored Mid">
+        <el-input v-model="form.teleopMid"></el-input>
+      </el-form-item>
+      <el-form-item label="Times Scored Low">
+        <el-input v-model="form.teleopLow"></el-input>
+      </el-form-item>
+      <el-form-item label="Engaged/Docked Teleop">
+        <el-input
           v-model="form.engageStatus"
           placeholder="2 for docked, 1 for engaged, 0 for neither"
-        ></v-input>
-      </v-model>
-      <v-model label="Teleop: Parked">
-        <v-input
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="Teleop: Parked">
+        <el-input
           v-model="form.parkTeleop"
           placeholder="Did they score points for parking? 1 for yes, 0 for no"
-        ></v-input>
-      </v-model>
-      <v-model label="Postgame: Number of Links Formed">
-        <v-input v-model="form.numLinks"></v-input>
-      </v-model>
-      <v-model label="Postgame: Coopertition Bonus">
-        <v-input
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="Postgame: Number of Links Formed">
+        <el-input v-model="form.numLinks"></el-input>
+      </el-form-item>
+      <el-form-item label="Postgame: Coopertition Bonus">
+        <el-input
           v-model="form.coopBonus"
           placeholder="1 for if the team was a part of activating the coopertition bonus, 0 if they weren't (even if others on their team did)"
-        ></v-input>
-      </v-model>
-      <v-model>
-        <v-btn
+        ></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button
           type="primary"
           @click="
             addMatchData(
@@ -82,10 +82,10 @@
               form.coopBonus
             )
           "
-          >Add Match Data</v-btn
+          >Add Match Data</el-button
         >
-      </v-model>
-    </v-form>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
