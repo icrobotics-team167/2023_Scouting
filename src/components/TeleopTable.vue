@@ -3,16 +3,16 @@
     <h1>
       Teleop and Postgame Data
     </h1>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column label="Team Number" prop="number"> </el-table-column>
-      <el-table-column label="Teleop: Scored High" prop="teleopHigh"> </el-table-column>
-      <el-table-column label="Teleop: Scored Mid" prop="teleopMid"> </el-table-column>
-      <el-table-column label="Teleop: Scored Low" prop="teleopLow"> </el-table-column>
-      <el-table-column label="Teleop: Dock/Engage" prop="engageStatus"> </el-table-column>
-      <el-table-column label="Teleop: Parked" prop="parkTeleop"> </el-table-column>
-      <el-table-column label="Postgame: # of Links" prop="numLinks"> </el-table-column>
-      <el-table-column label="Postgame: Coop Bonus" prop="coopBonus"> </el-table-column>
-    </el-table>
+    <v-table :data="tableData" style="width: 100%">
+      <td label="Team Number" prop="number"> </td>
+      <td label="Teleop: Scored High" prop="teleopHigh"> </td>
+      <td label="Teleop: Scored Mid" prop="teleopMid"> </td>
+      <td label="Teleop: Scored Low" prop="teleopLow"> </td>
+      <td label="Teleop: Dock/Engage" prop="engageStatus"> </td>
+      <td label="Teleop: Parked" prop="parkTeleop"> </td>
+      <td label="Postgame: # of Links" prop="numLinks"> </td>
+      <td label="Postgame: Coop Bonus" prop="coopBonus"> </td>
+    </v-table>
   </div>
 </template>
 <script>
