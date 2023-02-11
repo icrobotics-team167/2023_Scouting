@@ -1,27 +1,28 @@
-import Vue from 'vue';
-import App from './App.vue';
-import {createRouter, createWebHistory} from 'vue-router';
-import FormComponent from './components/FormComponent.vue';
-import AutoTable from './components/AutoTable.vue';
-import TeleopTable from './components/TeleopTable.vue';
-import GraphComponent from './components/GraphComponent.vue';
-import './plugins/element.js'
+import { createApp } from 'vue'
+import {createRouter, createWebHashHistory} from 'vue-router'
+import App from './App.vue'
+import vuetify from './plugins/vuetify'
+import { loadFonts } from './plugins/webfontloader'
+import AutoTable from './components/AutoTable.vue'
+import FormComponent from './components/FormComponent.vue'
+import GraphComponent from './components/GraphComponent.vue'
+import TeleopTable from './components/TeleopTable.vue'
 
-Vue.config.productionTip = false
+loadFonts()
 
 const routes = [
-  { path: '/', component: FormComponent },
-  { path: '/auto', component: AutoTable },
+  { path: '/', component: FormComponent},
+  { path: '/auto', component: AutoTable},
   { path: '/teleop', component: TeleopTable },
-  { path: '/graphs', component: GraphComponent }
+  { path: '/graph', component: GraphComponent },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  routes: routes
+  history: createWebHashHistory(),
+  routes,
 });
 
-new Vue({
-  render: h => h(App),
-  router
-}).$mount('#app')
+const app = createApp(App);
+app.use(vuetify);
+app.use(router);
+app.mount('#app');
