@@ -7,6 +7,8 @@ import AutoTable from './components/AutoTable.vue'
 import FormComponent from './components/FormComponent.vue'
 import GraphComponent from './components/GraphComponent.vue'
 import TeleopTable from './components/TeleopTable.vue'
+import IowaTeamList from './components/IowaTeamList.vue'
+import DuluthTeamList from './components/DuluthTeamList.vue'
 
 loadFonts()
 
@@ -15,6 +17,8 @@ const routes = [
   { path: '/auto', component: AutoTable},
   { path: '/teleop', component: TeleopTable },
   { path: '/graph', component: GraphComponent },
+  { path: '/duluth/teams', component: DuluthTeamList},
+  { path: '/iowa/teams', component: IowaTeamList},
 ];
 
 const router = createRouter({

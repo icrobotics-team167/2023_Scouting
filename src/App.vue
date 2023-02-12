@@ -9,6 +9,10 @@
           <v-list-item prepend-icon="mdi-robot" title="Auto Data" value="auto" to="/auto"></v-list-item>
           <v-list-item prepend-icon="mdi-human-queue" title="Teleop Data" value="teleop" to="/teleop"></v-list-item>
           <v-list-item prepend-icon="mdi-chart-bar" title="Graphs" value="graph" to="/graph"></v-list-item>
+          <v-divider></v-divider>
+          <v-list-item prepend-icon="mdi-format-list-numbered" title="Duluth Team List" value="team" to="/duluth/teams"></v-list-item>
+          <v-divider></v-divider>
+          <v-list-item prepend-icon="mdi-format-list-numbered" title="Iowa Team List" value="team" to="/iowa/teams"></v-list-item>
         </v-list>
       </v-navigation-drawer>
     <v-app-bar>
