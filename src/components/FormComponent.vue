@@ -1,8 +1,9 @@
 <template>
+  
   <v-form v-model="valid" ref="form">
     <v-container>
       <v-row>
-        <h1>Auto Form</h1>
+        <h1 class>Auto Form</h1>
       </v-row>
       <v-row>
         <v-col>
@@ -84,6 +85,7 @@
               form.numLinks,
               form.coopBonus
             )
+            
           " block class="mt-2">Submit</v-btn>
     </v-container>
   </v-form>
