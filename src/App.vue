@@ -3,6 +3,7 @@
     <v-navigation-drawer
         expand-on-hover
         rail
+        disable-resize-watcher
       >
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-form-select" title="Form" value="form" to="/"></v-list-item>
