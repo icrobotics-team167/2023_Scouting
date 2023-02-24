@@ -7,6 +7,7 @@
       >
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-form-select" title="Form" value="form" to="/"></v-list-item>
+          <v-list-item prepend-icon="mdi-form-select" title="Pit Form" value="form" to="/pitscouting"></v-list-item>
           <v-list-item prepend-icon="mdi-robot" title="Auto Data" value="auto" to="/auto"></v-list-item>
           <v-list-item prepend-icon="mdi-human-queue" title="Teleop Data" value="teleop" to="/teleop"></v-list-item>
           <v-list-item prepend-icon="mdi-chart-bar" title="Graphs" value="graph" to="/graph"></v-list-item>
