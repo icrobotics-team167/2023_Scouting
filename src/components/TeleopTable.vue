@@ -3,16 +3,28 @@
     <thead>
       <tr>
         <th class="text-left">
+         Scout Name
+        </th>
+        <th class="text-left">
          Team Number
         </th>
         <th class="text-left">
-          Teleop: Scored High
+          Teleop: Cones Scored High
         </th>
         <th class="text-left">
-          Teleop: Scored Mid
+          Teleop: Cones Scored Mid
         </th>
         <th class="text-left">
-          Teleop: Scored Low
+          Teleop: Cones Scored Low
+        </th>
+        <th class="text-left">
+          Teleop: Boxes Scored High
+        </th>
+        <th class="text-left">
+          Teleop: Boxes Scored Mid
+        </th>
+        <th class="text-left">
+          Teleop: Boxes Scored Low
         </th>
         <th class="text-left">
           Teleop: Dock/Engage
@@ -26,6 +38,9 @@
         <th class="text-left">
           Post Game: CoOp Bonus
         </th>
+        <th class="text-left" style = "min-width: 240px;">
+          Post Game: Other Notes
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -33,14 +48,19 @@
         v-for="item in tableData"
         :key="item.name"
       >
+        <td>{{ item.scout }}</td>
         <td>{{ item.number }}</td>
-        <td>{{ item.teleopHigh }}</td>
-        <td>{{ item.teleopMid }}</td>
-        <td>{{ item.teleopLow }}</td>
+        <td>{{ item.teleopHighCone }}</td>
+        <td>{{ item.teleopMidCone }}</td>
+        <td>{{ item.teleopLowCone }}</td>
+        <td>{{ item.teleopHighBox }}</td>
+        <td>{{ item.teleopMidBox }}</td>
+        <td>{{ item.teleopLowBox }}</td>
         <td>{{ item.engageStatus }}</td>
         <td>{{ item.parkTeleop }}</td>
         <td>{{ item.numLinks }}</td>
         <td>{{ item.coopBonus }}</td>
+        <td>{{ item.otherNotes }}</td>
       </tr>
     </tbody>
   </v-table>
@@ -64,22 +84,32 @@ getMatchData(db).then((querySnapshot) => {
   querySnapshot.forEach((doc) => {
     tableData.push({
       id: doc.id,
+      scout: doc.scout,
       number: doc.number,
       moveAuto: doc.moveAuto,
-      autoHigh: doc.autoHigh,
-      autoMid: doc.autoMid,
-      autoLow: doc.autoLow,
+      autoHighBox: doc.autoHighBox,
+      autoMidBox: doc.autoMidBox,
+      autoLowBox: doc.autoLowBox,
+      autoHighCone: doc.autoHighCone,
+      autoMidCone: doc.autoMidCone,
+      autoLowCone: doc.autoLowCone,
       engageStatusAuto: doc.engageStatusAuto,
-      teleopHigh: doc.teleopHigh,
-      teleopMid: doc.teleopMid,
-      teleopLow: doc.teleopLow,
+      teleopHighCone: doc.teleopHighCone,
+      teleopMidCone: doc.teleopMidCone,
+      teleopLowCone: doc.teleopLowCone,
+      teleopHighBox: doc.teleopHighBox,
+      teleopMidBox: doc.teleopMidBox,
+      teleopLowBox: doc.teleopLowBox,
       engageStatus: doc.engageStatus,
       parkTeleop: doc.parkTeleop,
       numLinks: doc.numLinks,
       coopBonus: doc.coopBonus,
+      otherNotes: doc.otherNotes,
     });
-  });
-});
+
+  })
+
+})
 
 export default {
     name: 'TeleopTable',

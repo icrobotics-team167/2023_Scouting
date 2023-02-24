@@ -1,21 +1,33 @@
 <template>
-    <v-table fixed-header>
+  <v-table fixed-header>
     <thead>
       <tr>
         <th class="text-left">
-         Team Number
+          Scout Name
+        </th>
+        <th class="text-left">
+          Team Number
         </th>
         <th class="text-left">
           Auto: Moved
         </th>
         <th class="text-left">
-          Auto: Scored High
+          Auto: Cones Scored High
         </th>
         <th class="text-left">
-          Auto: Scored Mid
+          Auto: Cones Scored Mid
         </th>
         <th class="text-left">
-          Auto: Scored Low
+          Auto: Cones Scored Low
+        </th>
+        <th class="text-left">
+          Auto: Boxes Scored High
+        </th>
+        <th class="text-left">
+          Auto: Boxes Scored Mid
+        </th>
+        <th class="text-left">
+          Auto: Boxes Scored Low
         </th>
         <th class="text-left">
           Auto: Dock/Engage
@@ -23,15 +35,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr
-        v-for="item in tableData"
-        :key="item.name"
-      >
+      <tr v-for="item in tableData" :key="item.name">
+        <td>{{ item.scout }}</td>
         <td>{{ item.number }}</td>
         <td>{{ item.moveAuto }}</td>
-        <td>{{ item.autoHigh }}</td>
-        <td>{{ item.autoMid }}</td>
-        <td>{{ item.autoLow }}</td>
+        <td>{{ item.autoHighCone }}</td>
+        <td>{{ item.autoMidCone }}</td>
+        <td>{{ item.autoLowCone }}</td>
+        <td>{{ item.autoHighBox }}</td>
+        <td>{{ item.autoMidBox }}</td>
+        <td>{{ item.autoLowBox }}</td>
         <td>{{ item.engageStatusAuto }}</td>
       </tr>
     </tbody>
@@ -56,31 +69,39 @@ getMatchData(db).then((querySnapshot) => {
   querySnapshot.forEach((doc) => {
     tableData.push({
       id: doc.id,
+      scout: doc.scout,
       number: doc.number,
       moveAuto: doc.moveAuto,
-      autoHigh: doc.autoHigh,
-      autoMid: doc.autoMid,
-      autoLow: doc.autoLow,
+      autoHighBox: doc.autoHighBox,
+      autoMidBox: doc.autoMidBox,
+      autoLowBox: doc.autoLowBox,
+      autoHighCone: doc.autoHighCone,
+      autoMidCone: doc.autoMidCone,
+      autoLowCone: doc.autoLowCone,
       engageStatusAuto: doc.engageStatusAuto,
-      teleopHigh: doc.teleopHigh,
-      teleopMid: doc.teleopMid,
-      teleopLow: doc.teleopLow,
+      teleopHighCone: doc.teleopHighCone,
+      teleopMidCone: doc.teleopMidCone,
+      teleopLowCone: doc.teleopLowCone,
+      teleopHighBox: doc.teleopHighBox,
+      teleopMidBox: doc.teleopMidBox,
+      teleopLowBox: doc.teleopLowBox,
       engageStatus: doc.engageStatus,
       parkTeleop: doc.parkTeleop,
       numLinks: doc.numLinks,
       coopBonus: doc.coopBonus,
+      otherNotes: doc.otherNotes,
     });
-   
+
   })
-  
+
 })
 
 export default {
-    name: 'AutoTable',
-    data() {
+  name: 'AutoTable',
+  data() {
     return {
       tableData
     };
   }
-  }
+}
 </script>
