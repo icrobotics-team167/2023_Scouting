@@ -1,9 +1,7 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-        expand-on-hover
-        rail
-        disable-resize-watcher
+    <v-bottom-navigation
+      horizontal
       >
         <v-list density="compact" nav>
           <v-list-item prepend-icon="mdi-form-select" title="Form" value="form" to="/"></v-list-item>
@@ -16,7 +14,7 @@
           <v-divider></v-divider>
           <v-list-item prepend-icon="mdi-format-list-numbered" title="Iowa Team List" value="team" to="/iowa/teams"></v-list-item>
         </v-list>
-      </v-navigation-drawer>
+      </v-bottom-navigation>
     <v-app-bar>
       <v-toolbar-title>2023 Scouting App</v-toolbar-title>
     </v-app-bar>
