@@ -1,20 +1,14 @@
 <template>
   <v-app id="inspire">
-    <v-bottom-navigation
-      horizontal
-      >
-        <v-list density="compact" nav>
-          <v-list-item prepend-icon="mdi-form-select" title="Form" value="form" to="/"></v-list-item>
-          <v-list-item prepend-icon="mdi-form-select" title="Pit Form" value="form" to="/pitscouting"></v-list-item>
-          <v-list-item prepend-icon="mdi-robot" title="Auto Data" value="auto" to="/auto"></v-list-item>
-          <v-list-item prepend-icon="mdi-human-queue" title="Teleop Data" value="teleop" to="/teleop"></v-list-item>
-          <v-list-item prepend-icon="mdi-chart-bar" title="Graphs" value="graph" to="/graph"></v-list-item>
-          <v-divider></v-divider>
-          <v-list-item prepend-icon="mdi-format-list-numbered" title="Duluth Team List" value="team" to="/duluth/teams"></v-list-item>
-          <v-divider></v-divider>
-          <v-list-item prepend-icon="mdi-format-list-numbered" title="Iowa Team List" value="team" to="/iowa/teams"></v-list-item>
-        </v-list>
-      </v-bottom-navigation>
+    <v-bottom-navigation horizontal>
+      <v-btn prepend-icon="mdi-form-select" title="Form" value="form" to="/"></v-btn>
+      <v-btn prepend-icon="mdi-form-select" title="Pit Form" value="form" to="/pitscouting"></v-btn>
+      <v-btn prepend-icon="mdi-robot" title="Auto Data" value="auto" to="/auto"></v-btn>
+      <v-btn prepend-icon="mdi-human-queue" title="Teleop Data" value="teleop" to="/teleop"></v-btn>
+      <v-btn prepend-icon="mdi-chart-bar" title="Graphs" value="graph" to="/graph"></v-btn>
+      <v-btn prepend-icon="mdi-format-list-numbered" title="Duluth Team List" value="team" to="/duluth/teams"></v-btn>
+      <v-btn prepend-icon="mdi-format-list-numbered" title="Iowa Team List" value="team" to="/iowa/teams"></v-btn>
+    </v-bottom-navigation>
     <v-app-bar>
       <v-toolbar-title>2023 Scouting App</v-toolbar-title>
     </v-app-bar>
@@ -32,8 +26,8 @@
 </template>
 
 <script>
-  export default {
-    name: 'App',
-    data: () => ({ drawer: null }),
-  }
+export default {
+  name: 'App',
+  data: () => ({ drawer: null }),
+}
 </script>

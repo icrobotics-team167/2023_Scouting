@@ -25,12 +25,12 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-text-field type="number" v-model="form.teleopHighCone" label="Times Scored High (cone)"></v-text-field>
-          <v-text-field type="number" v-model="form.teleopMidCone" label="Times Scored Mid (cone)"></v-text-field>
-          <v-text-field type="number" v-model="form.teleopLowCone" label="Times Scored Low (cone)"></v-text-field>
-          <v-text-field type="number" v-model="form.teleopHighBox" label="Times Scored High (box)"></v-text-field>
-          <v-text-field type="number" v-model="form.teleopMidBox" label="Times Scored Mid (box)"></v-text-field>
-          <v-text-field type="number" v-model="form.teleopLowBox" label="Times Scored Low (box)"></v-text-field>
+          <v-text-field type="number" v-model="form.teleopHighCone" label="Times Scored High (cone)" min=0></v-text-field>
+          <v-text-field type="number" v-model="form.teleopMidCone" label="Times Scored Mid (cone)" min=0></v-text-field>
+          <v-text-field type="number" v-model="form.teleopLowCone" label="Times Scored Low (cone)" min=0></v-text-field>
+          <v-text-field type="number" v-model="form.teleopHighBox" label="Times Scored High (box)" min=0></v-text-field>
+          <v-text-field type="number" v-model="form.teleopMidBox" label="Times Scored Mid (box)" min=0></v-text-field>
+          <v-text-field type="number" v-model="form.teleopLowBox" label="Times Scored Low (box)" min=0></v-text-field>
           <v-slider v-model="form.engageStatus" label="Engaged/Docked? 2 = Docked, 1 = Engaged, 0 = Neither" max=2 min=0
             step=1></v-slider>
           <v-checkbox v-model="form.parkTeleop" label="Score for Parking? 1=Yes, 0=No"></v-checkbox>
