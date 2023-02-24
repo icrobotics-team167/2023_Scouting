@@ -9,6 +9,8 @@ import GraphComponent from './components/GraphComponent.vue'
 import TeleopTable from './components/TeleopTable.vue'
 import IowaTeamList from './components/IowaTeamList.vue'
 import DuluthTeamList from './components/DuluthTeamList.vue'
+import PitFormComponent from './components/PitFormComponent.vue'
+
 
 loadFonts()
 
@@ -19,6 +21,8 @@ const routes = [
   { path: '/graph', component: GraphComponent },
   { path: '/duluth/teams', component: DuluthTeamList},
   { path: '/iowa/teams', component: IowaTeamList},
+  { path: '/pitscouting', component: PitFormComponent},
+
 ];
 
 const router = createRouter({
