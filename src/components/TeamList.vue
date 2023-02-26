@@ -25,7 +25,7 @@
 let tableData = [];
 
 export default {
-  name: "DuluthTeamList",
+  name: "TeamList",
   data() {
     return {
       tableData,

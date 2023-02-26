@@ -74,7 +74,7 @@ import firebase from "../firebaseInit";
 const db = firebase.firestore();
 
 export default {
-  name: "FormComponent",
+  name: "MatchForm",
   data: () => ({
     valid: false,
     form: {

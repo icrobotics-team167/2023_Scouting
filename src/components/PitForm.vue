@@ -114,7 +114,7 @@ import firebase from "../firebaseInit";
 const db = firebase.firestore();
 
 export default {
-  name: "FormComponent",
+  name: "PitForm",
   data: () => ({
     valid: false,
     form: {

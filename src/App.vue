@@ -1,16 +1,5 @@
 <template>
   <v-app id="inspire">
-    <v-bottom-navigation
-      horizontal
-      >
-          <v-btn prepend-icon="mdi-form-select" title="Form" value="form" to="/"></v-btn>
-          <v-btn prepend-icon="mdi-form-select" title="Pit Form" value="form" to="/pitscouting"></v-btn>
-          <v-btn prepend-icon="mdi-robot" title="Auto Data" value="auto" to="/auto"></v-btn>
-          <v-btn prepend-icon="mdi-human-queue" title="Teleop Data" value="teleop" to="/teleop"></v-btn>
-          <v-btn prepend-icon="mdi-chart-bar" title="Graphs" value="graph" to="/graph"></v-btn>
-          <v-btn prepend-icon="mdi-format-list-numbered" title="Duluth Team List" value="team" to="/duluth/teams"></v-btn>
-          <v-btn prepend-icon="mdi-format-list-numbered" title="Iowa Team List" value="team" to="/iowa/teams"></v-btn>
-      </v-bottom-navigation>
     <v-app-bar>
       <v-toolbar-title>2023 Scouting App</v-toolbar-title>
     </v-app-bar>
@@ -19,6 +8,44 @@
         <router-view />
       </v-container>
     </v-main>
+    <v-bottom-navigation horizontal mode="shift" :max-width="mobile ? '400px' : '600px'">
+      <v-btn
+        prepend-icon="mdi-form-select"
+        title="Match Form"
+        value="match"
+        :to="{ name: 'MatchForm' }"
+      >
+        <span>Match Form</span>
+      </v-btn>
+      <v-btn
+        prepend-icon="mdi-information"
+        title="Pit Form"
+        value="pit"
+        :to="{ name: 'PitForm' }"
+        ><span>Pit Form</span></v-btn
+      >
+      <v-btn
+        prepend-icon="mdi-robot"
+        title="Auto Data"
+        value="auto"
+        :to="{ name: 'AutoTable' }"
+        ><span>Auto Table</span></v-btn
+      >
+      <v-btn
+        prepend-icon="mdi-human-queue"
+        title="Teleop Data"
+        value="teleop"
+        :to="{ name: 'TeleopTable' }"
+        ><span>Teleop Table</span></v-btn
+      >
+      <v-btn
+        prepend-icon="mdi-format-list-bulleted"
+        title="Team List"
+        value="team"
+        :to="{ name: 'TeamList' }"
+        ><span>Team List</span></v-btn
+      >
+    </v-bottom-navigation>
     <v-footer class="d-flex flex-column">
       <div class="px-4 py-2 bg-black text-center w-100">
         {{ new Date().getFullYear() }} — <strong>167 Iowa City Robotics</strong>
@@ -28,8 +55,21 @@
 </template>
 
 <script>
-  export default {
-    name: 'App',
-    data: () => ({ drawer: null }),
+import { onMounted } from "vue";
+import { useDisplay } from "vuetify";
+
+export default {
+  name: "App",
+  data: () => ({ drawer: null }),
+  setup() {
+    const { mobile } = useDisplay();
+
+    onMounted(() => {
+      console.log(mobile.value); // false
+    });
+  },
+  methods: {
+    
   }
+};
 </script>

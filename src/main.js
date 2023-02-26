@@ -1,34 +1,10 @@
 import { createApp } from 'vue'
-import {createRouter, createWebHashHistory} from 'vue-router'
+import router from './router/index'
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import { loadFonts } from './plugins/webfontloader'
-import AutoTable from './components/AutoTable.vue'
-import FormComponent from './components/FormComponent.vue'
-import GraphComponent from './components/GraphComponent.vue'
-import TeleopTable from './components/TeleopTable.vue'
-import IowaTeamList from './components/IowaTeamList.vue'
-import DuluthTeamList from './components/DuluthTeamList.vue'
-import PitFormComponent from './components/PitFormComponent.vue'
-
 
 loadFonts()
-
-const routes = [
-  { path: '/', component: FormComponent},
-  { path: '/auto', component: AutoTable},
-  { path: '/teleop', component: TeleopTable },
-  { path: '/graph', component: GraphComponent },
-  { path: '/duluth/teams', component: DuluthTeamList},
-  { path: '/iowa/teams', component: IowaTeamList},
-  { path: '/pitscouting', component: PitFormComponent},
-
-];
-
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes,
-});
 
 const app = createApp(App);
 app.use(vuetify);
