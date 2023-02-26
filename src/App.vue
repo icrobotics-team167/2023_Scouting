@@ -1,6 +1,14 @@
 <template>
   <v-app id="inspire">
-    <v-bottom-navigation horizontal mode="shift">
+    <v-app-bar>
+      <v-toolbar-title>2023 Scouting App</v-toolbar-title>
+    </v-app-bar>
+    <v-main>
+      <v-container>
+        <router-view />
+      </v-container>
+    </v-main>
+    <v-bottom-navigation horizontal mode="shift" :max-width="mobile ? '400px' : '600px'">
       <v-btn
         prepend-icon="mdi-form-select"
         title="Match Form"
@@ -38,14 +46,6 @@
         ><span>Team List</span></v-btn
       >
     </v-bottom-navigation>
-    <v-app-bar>
-      <v-toolbar-title>2023 Scouting App</v-toolbar-title>
-    </v-app-bar>
-    <v-main>
-      <v-container>
-        <router-view />
-      </v-container>
-    </v-main>
     <v-footer class="d-flex flex-column">
       <div class="px-4 py-2 bg-black text-center w-100">
         {{ new Date().getFullYear() }} — <strong>167 Iowa City Robotics</strong>
