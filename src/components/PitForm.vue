@@ -1,110 +1,65 @@
 <template>
-  
   <v-form v-model="valid" ref="form">
     <v-container>
       <v-row>
-        <h1 class>Auto Form</h1>
+        <h1 class>Pit Scouting</h1>
+      </v-row>
+      <v-col>
+        <v-text-field v-model="form.number" label="Team Number" required></v-text-field>
+        <v-text-field v-model="form.scout" label="Scout Name" required></v-text-field>
+        <v-text-field v-model="form.rookie" label="Rookie?" required></v-text-field>
+        <v-text-field v-model="form.coach" label="Drive Coach Name" required></v-text-field>
+        <v-text-field v-model="form.driveBase" label="Drive Base" required></v-text-field>
+      </v-col>
+      <v-row>
+        <h2 class>Auto Info</h2>
       </v-row>
       <v-row>
         <v-col>
-          <v-text-field
-            v-model="form.number"
-            label="Team Number"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="form.rookie"
-            label="Rookie?"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="form.coach"
-            label="Drive Coach Name"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="form.driveBase"
-            label="Drive Base"
-            required
-          ></v-text-field>
-          <v-text-field
-            v-model="form.moveAuto"
-            label="Can Move in Auto? 1=Yes, 0=No"
-          ></v-text-field>
-          <v-text-field
-            v-model="form.autoHigh"
-            label="Predicted High Scores"
-          ></v-text-field>
-          <v-text-field
-            v-model="form.autoMid"
-            label="Predicted Mid Scores"
-          ></v-text-field>
-          <v-text-field
-            v-model="form.autoLow"
-            label="Predicted Low Scores"
-          ></v-text-field>
-          <v-text-field
-            v-model="form.engageStatusAuto"
-            label="Can Engage/Dock Auto? 2=Dock, 1=Engage, 0=Neither"
-          ></v-text-field>
+          <v-checkbox v-model="form.moveAuto" label="Can move in Auto?"></v-checkbox>
+          <v-text-field v-model="form.autoHigh" label="Predicted High Scores"></v-text-field>
+          <v-text-field v-model="form.autoMid" label="Predicted Mid Scores"></v-text-field>
+          <v-text-field v-model="form.autoLow" label="Predicted Low Scores"></v-text-field>
+          <v-slider v-model="form.engageStatusAuto" max=2 min=0 step=1 show-ticks="always" :ticks="tickLabels"
+            tick-size="4"></v-slider>
         </v-col>
       </v-row>
       <v-row>
-        <h1>Teleop Form</h1>
+        <h2>Teleop Info</h2>
       </v-row>
       <v-row>
         <v-col>
-            <v-text-field
-        v-model="form.teleopHigh"
-        label="Predicted High Scores"
-      ></v-text-field>
-      <v-text-field
-        v-model="form.teleopMid"
-        label="Predicted Mid Scores"
-      ></v-text-field>
-      <v-text-field
-        v-model="form.teleopLow"
-        label="Predicted Low Scores"
-      ></v-text-field>
-      <v-text-field
-        v-model="form.engageStatus"
-        label="Can Dock/Engage? 2=Dock, 1=Engage, 0=Neither"
-      ></v-text-field>
-      <v-text-field
-        v-model="form.parkTeleop"
-        label="Can Park? 1=Yes, 0=No"
-      ></v-text-field>
-      <v-text-field
-        v-model="form.numLinks"
-        label="Predicted Number of Links"
-      ></v-text-field>
-      <v-text-field
-        v-model="form.coopBonus"
-        label="Aiming For Coopertition Bonus? 1=Yes, 0=No"
-      ></v-text-field>
+          <v-text-field v-model="form.teleopHigh" label="Predicted High Scores"></v-text-field>
+          <v-text-field v-model="form.teleopMid" label="Predicted Mid Scores"></v-text-field>
+          <v-text-field v-model="form.teleopLow" label="Predicted Low Scores"></v-text-field>
+          <v-slider v-model="form.engageStatus" max=2 min=0 step=1 show-ticks="always" :ticks="tickLabels"
+            tick-size="4"></v-slider>
+          <v-text-field v-model="form.numLinks" label="Predicted Number of Links"></v-text-field>
+          <v-checkbox v-model="form.coopBonus" label="Aiming For Coopertition Bonus?"></v-checkbox>
+          <v-textarea v-model="form.otherNotes" label="Notes" auto-grow></v-textarea>
         </v-col>
       </v-row>
       <v-btn type="submit" @click="
-            addMatchData(
-              form.number,
-              form.rookie,
-              form.coach,
-              form.driveBase,
-              form.moveAuto,
-              form.autoHigh,
-              form.autoMid,
-              form.autoLow,
-              form.engageStatusAuto,
-              form.teleopHigh,
-              form.teleopMid,
-              form.teleopLow,
-              form.engageStatus,
-              form.parkTeleop,
-              form.numLinks,
-              form.coopBonus
-            )
-            
-          " block class="mt-2">Submit</v-btn>
+        addMatchData(
+          form.number,
+          form.rookie,
+          form.coach,
+          form.driveBase,
+          form.moveAuto,
+          form.autoHigh,
+          form.autoMid,
+          form.autoLow,
+          form.engageStatusAuto,
+          form.teleopHigh,
+          form.teleopMid,
+          form.teleopLow,
+          form.engageStatus,
+          form.numLinks,
+          form.coopBonus,
+          form.otherNotes
+        )
+
+      " block class="mt-2">Submit</v-btn>
     </v-container>
   </v-form>
 </template>
@@ -134,14 +89,21 @@ export default {
       parkTeleop: "",
       numLinks: "",
       coopBonus: "",
+      otherNotes: "",
       matchData: [],
-    }
+    },
+    tickLabels: {
+      0: "Can't Engage",
+      1: 'Can Engage',
+      2: 'Can Dock'
+    },
   }),
   methods: {
     addMatchData(
       number,
       rookie,
       coach,
+      scout,
       driveBase,
       moveAuto,
       autoHigh,
@@ -154,7 +116,8 @@ export default {
       engageStatus,
       parkTeleop,
       numLinks,
-      coopBonus
+      coopBonus,
+      otherNotes
     ) {
       if (number != "") {
         db.collection("matchData")
@@ -162,6 +125,7 @@ export default {
             number,
             rookie,
             coach,
+            scout,
             driveBase,
             moveAuto,
             autoHigh,
@@ -175,6 +139,7 @@ export default {
             parkTeleop,
             numLinks,
             coopBonus,
+            otherNotes
           })
           .then(() => {
             console.log("Document successfully written!");
@@ -198,6 +163,7 @@ export default {
               number: doc.data().number,
               rookie: doc.data().rookie,
               coach: doc.data().coach,
+              scout: doc.data().scout,
               driveBase: doc.data().driveBase,
               moveAuto: doc.data().moveAuto,
               autoHigh: doc.data().autoHigh,
@@ -211,12 +177,14 @@ export default {
               parkTeleop: doc.data().parkTeleop,
               numLinks: doc.data().numLinks,
               coopBonus: doc.data().coopBonus,
+              otherNotes: doc.data().otherNotes
             });
           });
           this.form = {
             number: "",
             rookie: "",
             coach: "",
+            scout: "",
             driveBase: "",
             moveAuto: "",
             autoHigh: "",
@@ -230,6 +198,7 @@ export default {
             parkTeleop: "",
             numLinks: "",
             coopBonus: "",
+            otherNotes: "",
             matchData: [],
           };
           window.scrollTo(0, 0);

@@ -10,14 +10,13 @@
       <v-row>
         <v-col>
           <v-checkbox v-model="form.moveAuto" label="Moved in Auto?"></v-checkbox>
-          <v-text-field type="number" v-model="form.autoHighCone" label="Times Scored High (cone)" min=0></v-text-field>
-          <v-text-field type="number" v-model="form.autoMidCone" label="Times Scored Mid (cone)" min=0></v-text-field>
-          <v-text-field type="number" v-model="form.autoLowCone" label="Times Scored Low (cone)" min=0></v-text-field>
-          <v-text-field type="number" v-model="form.autoHighBox" label="Times Scored High (box)" min=0></v-text-field>
-          <v-text-field type="number" v-model="form.autoMidBox" label="Times Scored Mid (box)" min=0></v-text-field>
-          <v-text-field type="number" v-model="form.autoLowBox" label="Times Scored Low (box)" min=0></v-text-field>
-          <v-slider v-model="form.engageStatusAuto" label="Engaged/Docked Auto? 2 = Docked, 1 = Engaged, 0 = Neither"
-            max=2 min=0 step=1></v-slider>
+          <v-text-field type="number" v-model="form.autoHighCone" label="Times Scored High (cone)" min=0 value=0></v-text-field>
+          <v-text-field type="number" v-model="form.autoMidCone" label="Times Scored Mid (cone)" min=0 value=0></v-text-field>
+          <v-text-field type="number" v-model="form.autoLowCone" label="Times Scored Low (cone)" min=0  value=0></v-text-field>
+          <v-text-field type="number" v-model="form.autoHighBox" label="Times Scored High (box)" min=0  value=0></v-text-field>
+          <v-text-field type="number" v-model="form.autoMidBox" label="Times Scored Mid (box)" min=0  value=0></v-text-field>
+          <v-text-field type="number" v-model="form.autoLowBox" label="Times Scored Low (box)" min=0 value = 0></v-text-field>
+           <v-slider v-model="form.engageStatusAuto" max=2 min=0 step=1 show-ticks="always" :ticks="tickLabels" tick-size="4"></v-slider>
         </v-col>
       </v-row>
       <v-row>
@@ -25,17 +24,16 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-text-field type="number" v-model="form.teleopHighCone" label="Times Scored High (cone)"></v-text-field>
-          <v-text-field type="number" v-model="form.teleopMidCone" label="Times Scored Mid (cone)"></v-text-field>
-          <v-text-field type="number" v-model="form.teleopLowCone" label="Times Scored Low (cone)"></v-text-field>
-          <v-text-field type="number" v-model="form.teleopHighBox" label="Times Scored High (box)"></v-text-field>
-          <v-text-field type="number" v-model="form.teleopMidBox" label="Times Scored Mid (box)"></v-text-field>
-          <v-text-field type="number" v-model="form.teleopLowBox" label="Times Scored Low (box)"></v-text-field>
-          <v-slider v-model="form.engageStatus" label="Engaged/Docked? 2 = Docked, 1 = Engaged, 0 = Neither" max=2 min=0
-            step=1></v-slider>
-          <v-checkbox v-model="form.parkTeleop" label="Score for Parking? 1=Yes, 0=No"></v-checkbox>
-          <v-text-field type="number" v-model="form.numLinks" label="Number of Links Formed"></v-text-field>
-          <v-checkbox v-model="form.coopBonus" label="Coopertition Bonus? 1=Yes, 0=No"></v-checkbox>
+          <v-text-field type="number" v-model="form.teleopHighCone" label="Times Scored High (cone)" min=0 value=0></v-text-field>
+          <v-text-field type="number" v-model="form.teleopMidCone" label="Times Scored Mid (cone)" min=0 value=0></v-text-field>
+          <v-text-field type="number" v-model="form.teleopLowCone" label="Times Scored Low (cone)" min=0 value=0></v-text-field>
+          <v-text-field type="number" v-model="form.teleopHighBox" label="Times Scored High (box)" min=0 value=0></v-text-field>
+          <v-text-field type="number" v-model="form.teleopMidBox" label="Times Scored Mid (box)" min=0 value=0></v-text-field>
+          <v-text-field type="number" v-model="form.teleopLowBox" label="Times Scored Low (box)" min=0 value=0></v-text-field>
+          <v-slider v-model="form.engageStatus" max=2 min=0 step=1 show-ticks="always" :ticks="tickLabels" tick-size="4"></v-slider>
+          <v-checkbox v-model="form.parkTeleop" label="Score for Parking?"></v-checkbox>
+          <v-text-field type="number" v-model="form.numLinks" label="Number of Links Formed"  value=0></v-text-field>
+          <v-checkbox v-model="form.coopBonus" label="Coopertition Bonus?"></v-checkbox>
           <v-textarea v-model="form.otherNotes" label="Notes" auto-grow></v-textarea>
         </v-col>
       </v-row>
@@ -81,26 +79,31 @@ export default {
       scout: "",
       number: "",
       moveAuto: "",
-      autoHighBox: "",
-      autoMidBox: "",
-      autoLowBox: "",
-      autoHighCone: "",
-      autoMidCone: "",
-      autoLowCone: "",
-      engageStatusAuto: "",
-      teleopHighCone: "",
-      teleopMidCone: "",
-      teleopLowCone: "",
-      teleopHighBox: "",
-      teleopMidBox: "",
-      teleopLowBox: "",
-      engageStatus: "",
-      parkTeleop: "",
-      numLinks: "",
-      coopBonus: "",
+      autoHighBox: 0,
+      autoMidBox: 0,
+      autoLowBox: 0,
+      autoHighCone: 0,
+      autoMidCone: 0,
+      autoLowCone: 0,
+      engageStatusAuto: 0,
+      teleopHighCone: 0,
+      teleopMidCone: 0,
+      teleopLowCone: 0,
+      teleopHighBox: 0,
+      teleopMidBox: 0,
+      teleopLowBox: 0,
+      engageStatus: 0,
+      parkTeleop: 0,
+      numLinks: 0,
+      coopBonus: 0,
       otherNotes: "",
       matchData: [],
-    }
+    },
+    tickLabels: {
+          0: 'Not Engaged',
+          1: 'Engaged',
+          2: 'Docked'
+        },
   }),
   methods: {
     addMatchData(
