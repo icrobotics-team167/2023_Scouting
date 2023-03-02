@@ -1,6 +1,8 @@
 <template>
   <v-form v-model="valid" ref="form">
     <v-container>
+      <v-text-field v-model="form.matchNumber" label="Match Number" required>
+      </v-text-field>
       <v-text-field
         v-model="form.number"
         label="Team Number"
@@ -174,6 +176,7 @@
           addMatchData(
             form.scout,
             form.number,
+            form.matchNumber,
             form.moveAuto,
             form.autoHighBox,
             form.autoMidBox,
@@ -214,6 +217,7 @@ export default {
     form: {
       scout: "",
       number: "",
+      matchNumber: 0,
       moveAuto: "",
       autoHighBox: 0,
       autoMidBox: 0,
@@ -245,6 +249,7 @@ export default {
     addMatchData(
       scout,
       number,
+      matchNumber,
       moveAuto,
       autoHighBox,
       autoMidBox,
@@ -266,8 +271,9 @@ export default {
       otherNotes
     ) {
       if (number != "") {
-        db.collection("matchData")
-          .add({
+        let docId = "match-" + matchNumber + "-team-" + number;
+        db.collection("matchData").doc(docId)
+          .set({
             scout,
             number,
             moveAuto,
