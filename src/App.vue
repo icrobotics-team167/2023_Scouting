@@ -25,6 +25,13 @@
         ><span>Pit Form</span></v-btn
       >
       <v-btn
+        prepend-icon="mdi-format-list-bulleted"
+        title="Pit Table"
+        value="table"
+        :to="{ name: 'PitTable' }"
+        ><span>Pit Table</span></v-btn
+      >
+      <v-btn
         prepend-icon="mdi-robot"
         title="Auto Data"
         value="auto"

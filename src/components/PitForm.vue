@@ -17,6 +17,8 @@
       <v-row>
         <v-col>
           <v-checkbox v-model="form.moveAuto" label="Can move in Auto?"></v-checkbox>
+          <v-checkbox v-model="form.autoCones" label="Can score cones in Auto?"></v-checkbox>
+          <v-checkbox v-model="form.autoBoxes" label="Can score boxes in Auto?"></v-checkbox>
           <v-text-field v-model="form.autoHigh" label="Predicted High Scores"></v-text-field>
           <v-text-field v-model="form.autoMid" label="Predicted Mid Scores"></v-text-field>
           <v-text-field v-model="form.autoLow" label="Predicted Low Scores"></v-text-field>
@@ -29,6 +31,8 @@
       </v-row>
       <v-row>
         <v-col>
+          <v-checkbox v-model="form.teleopCones" label="Can score cones in Teleop?"></v-checkbox>
+          <v-checkbox v-model="form.teleopBoxes" label="Can score boxes in Teleop?"></v-checkbox>
           <v-text-field v-model="form.teleopHigh" label="Predicted High Scores"></v-text-field>
           <v-text-field v-model="form.teleopMid" label="Predicted Mid Scores"></v-text-field>
           <v-text-field v-model="form.teleopLow" label="Predicted Low Scores"></v-text-field>
@@ -40,7 +44,7 @@
         </v-col>
       </v-row>
       <v-btn type="submit" @click="
-        addMatchData(
+        addPitData(
           form.number,
           form.rookie,
           form.coach,
@@ -50,6 +54,10 @@
           form.autoMid,
           form.autoLow,
           form.engageStatusAuto,
+          form.autoCones,
+          form.autoBoxes,
+          form.teleopCones,
+          form.teleopBoxes,
           form.teleopHigh,
           form.teleopMid,
           form.teleopLow,
@@ -90,7 +98,11 @@ export default {
       numLinks: "",
       coopBonus: "",
       otherNotes: "",
-      matchData: [],
+      autoCones: "",
+      autoBoxes: "",
+      teleopCones: "",
+      teleopBoxes: "",
+      PitData: [],
     },
     tickLabels: {
       0: "Can't Engage",
@@ -99,7 +111,7 @@ export default {
     },
   }),
   methods: {
-    addMatchData(
+    addPitData(
       number,
       rookie,
       coach,
@@ -113,6 +125,10 @@ export default {
       teleopHigh,
       teleopMid,
       teleopLow,
+      autoCones,
+      autoBoxes,
+      teleopCones,
+      teleopBoxes,
       engageStatus,
       parkTeleop,
       numLinks,
@@ -120,7 +136,7 @@ export default {
       otherNotes
     ) {
       if (number != "") {
-        db.collection("matchData")
+        db.collection("PitData")
           .add({
             number,
             rookie,
@@ -135,6 +151,10 @@ export default {
             teleopHigh,
             teleopMid,
             teleopLow,
+            autoCones,
+            autoBoxes,
+            teleopCones,
+            teleopBoxes,
             engageStatus,
             parkTeleop,
             numLinks,
@@ -143,7 +163,7 @@ export default {
           })
           .then(() => {
             console.log("Document successfully written!");
-            this.readmatchData();
+            this.readPitData();
           })
           .catch((error) => {
             console.error("Error writing document: ", error);
@@ -151,14 +171,14 @@ export default {
         this.number = "";
       }
     },
-    readmatchData() {
-      this.form.matchData = [];
+    readPitData() {
+      this.form.PitData = [];
 
-      db.collection("matchData")
+      db.collection("PitData")
         .get()
         .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-            this.form.matchData.push({
+            this.form.PitData.push({
               id: doc.id,
               number: doc.data().number,
               rookie: doc.data().rookie,
@@ -174,6 +194,10 @@ export default {
               teleopMid: doc.data().teleopMid,
               teleopLow: doc.data().teleopLow,
               engageStatus: doc.data().engageStatus,
+              autoCones: doc.data().autoCones,
+              autoBoxes: doc.data().autoBoxes,
+              teleopCones: doc.data().teleopCones,
+              teleopBoxes: doc.data().teleopBoxes,
               parkTeleop: doc.data().parkTeleop,
               numLinks: doc.data().numLinks,
               coopBonus: doc.data().coopBonus,
@@ -194,12 +218,16 @@ export default {
             teleopHigh: "",
             teleopMid: "",
             teleopLow: "",
+            autoCones: "",
+            autoBoxes: "",
+            teleopCones: "",
+            teleopBoxes: "",
             engageStatus: "",
             parkTeleop: "",
             numLinks: "",
             coopBonus: "",
             otherNotes: "",
-            matchData: [],
+            PitData: [],
           };
           window.scrollTo(0, 0);
         })
@@ -209,7 +237,7 @@ export default {
     },
   },
   mounted() {
-    this.readmatchData();
+    this.readPitData();
   },
 };
 </script>
