@@ -6,27 +6,35 @@
       color="error"
       closable
     ></v-alert>
+    <v-alert
+      v-if="isDocumentError"
+      text="Problem submitting to Firebase. Please try again."
+      color="error"
+      closable
+    ></v-alert>
     <v-container>
-      <v-text-field
-        v-model="form.matchNumber"
-        label="Match Number"
-        type="number"
-        required
-        :rules="requiredField"
-      >
-      </v-text-field>
-      <v-text-field
-        v-model="form.number"
-        label="Team Number"
-        required
-        :rules="requiredField"
-      ></v-text-field>
-      <v-text-field
-        v-model="form.scout"
-        label="Scout Name"
-        required
-        :rules="requiredField"
-      ></v-text-field>
+      <v-row>
+        <h1>Match Scouting</h1>
+      </v-row>
+      <v-col>
+        <v-text-field
+          v-model="form.matchNumber"
+          label="Match Number"
+          type="number"
+          required
+        >
+        </v-text-field>
+        <v-text-field
+          v-model="form.number"
+          label="Team Number"
+          required
+        ></v-text-field>
+        <v-text-field
+          v-model="form.scout"
+          label="Scout Name"
+          required
+        ></v-text-field>
+      </v-col>
       <v-row>
         <h1>Auto Form</h1>
       </v-row>
@@ -183,37 +191,7 @@
         label="Notes"
         auto-grow
       ></v-textarea>
-      <v-btn
-        @click="
-          addMatchData(
-            form.scout,
-            form.number,
-            form.matchNumber,
-            form.moveAuto,
-            form.autoHighBox,
-            form.autoMidBox,
-            form.autoLowBox,
-            form.autoHighCone,
-            form.autoMidCone,
-            form.autoLowCone,
-            form.engageStatusAuto,
-            form.teleopHighCone,
-            form.teleopMidCone,
-            form.teleopLowCone,
-            form.teleopHighBox,
-            form.teleopMidBox,
-            form.teleopLowBox,
-            form.engageStatus,
-            form.parkTeleop,
-            form.numLinks,
-            form.coopBonus,
-            form.otherNotes
-          )
-        "
-        block
-        class="mt-2"
-        >Submit</v-btn
-      >
+      <v-btn @click="addMatchData(form)" block class="mt-2">Submit</v-btn>
     </v-container>
   </v-form>
 </template>
@@ -227,12 +205,7 @@ export default {
   data: () => ({
     valid: false,
     isAlertVisible: false,
-    requiredField: [
-      (value) => {
-        if (value) return true;
-        return "This is a required field";
-      },
-    ],
+    isDocumentError: false,
     form: {
       scout: "",
       number: "",
@@ -265,147 +238,54 @@ export default {
     },
   }),
   methods: {
-    addMatchData(
-      scout,
-      number,
-      matchNumber,
-      moveAuto,
-      autoHighBox,
-      autoMidBox,
-      autoLowBox,
-      autoHighCone,
-      autoMidCone,
-      autoLowCone,
-      engageStatusAuto,
-      teleopHighCone,
-      teleopMidCone,
-      teleopLowCone,
-      teleopHighBox,
-      teleopMidBox,
-      teleopLowBox,
-      engageStatus,
-      parkTeleop,
-      numLinks,
-      coopBonus,
-      otherNotes
-    ) {
+    addMatchData(form) {
       if (
-        number == undefined ||
-        matchNumber == undefined ||
-        scout == undefined
+        form.number == undefined ||
+        form.matchNumber == undefined ||
+        form.scout == undefined
       ) {
         this.isAlertVisible = true;
         window.scrollTo(0, 0);
         return;
       }
-      let docId = "match-" + matchNumber + "-team-" + number;
+      let docId = "match-" + form.matchNumber + "-team-" + form.number;
       db.collection("matchData")
         .doc(docId)
-        .set({
-          scout,
-          number,
-          moveAuto,
-          autoHighBox,
-          autoMidBox,
-          autoLowBox,
-          autoHighCone,
-          autoMidCone,
-          autoLowCone,
-          engageStatusAuto,
-
-          teleopHighCone,
-          teleopMidCone,
-          teleopLowCone,
-          teleopHighBox,
-          teleopMidBox,
-          teleopLowBox,
-          engageStatus,
-          parkTeleop,
-          numLinks,
-          coopBonus,
-          otherNotes,
-        })
+        .set({ form })
         .then(() => {
-          console.log("Document successfully written!");
-          this.readmatchData();
-        })
-        .catch((error) => {
-          console.error("Error writing document: ", error);
-        });
-    },
-    readmatchData() {
-      this.form.matchData = [];
-
-      db.collection("matchData")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            this.form.matchData.push({
-              id: doc.id,
-              scout: doc.data().scout,
-              number: doc.data().number,
-              moveAuto: doc.data().moveAuto,
-              autoHighBox: doc.data().autoHighBox,
-              autoMidBox: doc.data().autoMidBox,
-              autoLowBox: doc.data().autoLowBox,
-              autoHighCone: doc.data().autoHighCone,
-              autoMidCone: doc.data().autoMidCone,
-              autoLowCone: doc.data().autoLowCone,
-              engageStatusAuto: doc.data().engageStatusAuto,
-              teleopHighCone: doc.data().teleopHighCone,
-              teleopMidCone: doc.data().teleopMidCone,
-              teleopLowCone: doc.data().teleopLowCone,
-              teleopHighBox: doc.data().teleopHighBox,
-              teleopMidBox: doc.data().teleopMidBox,
-              teleopLowBox: doc.data().teleopLowBox,
-              engageStatus: doc.data().engageStatus,
-              parkTeleop: doc.data().parkTeleop,
-              numLinks: doc.data().numLinks,
-              coopBonus: doc.data().coopBonus,
-              otherNotes: doc.data().otherNotes,
-            });
-          });
           this.form = {
+            scout: "",
             number: "",
+            matchNumber: 0,
             moveAuto: "",
-            autoHighBox: "",
-            autoMidBox: "",
-            autoLowBox: "",
-            autoHighCone: "",
-            autoMidCone: "",
-            autoLowCone: "",
-            engageStatusAuto: "",
-            teleopHighCone: "",
-            teleopMidCone: "",
-            teleopLowCone: "",
-            teleopHighBox: "",
-            teleopMidBox: "",
-            teleopLowBox: "",
-            engageStatus: "",
-            parkTeleop: "",
-            numLinks: "",
-            coopBonus: "",
+            autoHighBox: 0,
+            autoMidBox: 0,
+            autoLowBox: 0,
+            autoHighCone: 0,
+            autoMidCone: 0,
+            autoLowCone: 0,
+            engageStatusAuto: 0,
+            teleopHighCone: 0,
+            teleopMidCone: 0,
+            teleopLowCone: 0,
+            teleopHighBox: 0,
+            teleopMidBox: 0,
+            teleopLowBox: 0,
+            engageStatus: 0,
+            parkTeleop: 0,
+            numLinks: 0,
+            coopBonus: 0,
             otherNotes: "",
             matchData: [],
           };
           window.scrollTo(0, 0);
         })
         .catch((error) => {
-          console.log("Error getting documents: ", error);
+          console.error("Error writing document: ", error);
+          this.isDocumentError = true;
+          window.scrollTo(0, 0);
         });
     },
   },
-  mounted() {
-    this.readmatchData();
-  },
 };
 </script>
-<style>
-.cone-btn {
-  color: plum !important;
-}
-
-.cube-btn {
-  color: yellow;
-}
-</style>
