@@ -1,17 +1,31 @@
 <template>
   <v-form v-model="valid" ref="form">
+    <v-alert
+      v-if="isAlertVisible"
+      text="Missing required information: Match number, team number, scout name."
+      color="error"
+      closable
+    ></v-alert>
     <v-container>
-      <v-text-field v-model="form.matchNumber" label="Match Number" required>
+      <v-text-field
+        v-model="form.matchNumber"
+        label="Match Number"
+        type="number"
+        required
+        :rules="requiredField"
+      >
       </v-text-field>
       <v-text-field
         v-model="form.number"
         label="Team Number"
         required
+        :rules="requiredField"
       ></v-text-field>
       <v-text-field
         v-model="form.scout"
         label="Scout Name"
         required
+        :rules="requiredField"
       ></v-text-field>
       <v-row>
         <h1>Auto Form</h1>
@@ -84,10 +98,7 @@
         </v-col>
       </v-row>
       <v-row>
-          <v-checkbox
-            v-model="form.moveAuto"
-            label="Moved in Auto?"
-          ></v-checkbox>
+        <v-checkbox v-model="form.moveAuto" label="Moved in Auto?"></v-checkbox>
       </v-row>
       <h1>Teleop Form</h1>
       <v-row>
@@ -160,7 +171,8 @@
       <v-text-field
         type="number"
         v-model="form.numLinks"
-        label="Number of Links Formed" min="0"
+        label="Number of Links Formed"
+        min="0"
       ></v-text-field>
       <v-checkbox
         v-model="form.coopBonus"
@@ -214,6 +226,13 @@ export default {
   name: "MatchForm",
   data: () => ({
     valid: false,
+    isAlertVisible: false,
+    requiredField: [
+      (value) => {
+        if (value) return true;
+        return "This is a required field";
+      },
+    ],
     form: {
       scout: "",
       number: "",
@@ -270,42 +289,49 @@ export default {
       coopBonus,
       otherNotes
     ) {
-      if (number != "") {
-        let docId = "match-" + matchNumber + "-team-" + number;
-        db.collection("matchData").doc(docId)
-          .set({
-            scout,
-            number,
-            moveAuto,
-            autoHighBox,
-            autoMidBox,
-            autoLowBox,
-            autoHighCone,
-            autoMidCone,
-            autoLowCone,
-            engageStatusAuto,
-
-            teleopHighCone,
-            teleopMidCone,
-            teleopLowCone,
-            teleopHighBox,
-            teleopMidBox,
-            teleopLowBox,
-            engageStatus,
-            parkTeleop,
-            numLinks,
-            coopBonus,
-            otherNotes,
-          })
-          .then(() => {
-            console.log("Document successfully written!");
-            this.readmatchData();
-          })
-          .catch((error) => {
-            console.error("Error writing document: ", error);
-          });
-        this.number = "";
+      if (
+        number == undefined ||
+        matchNumber == undefined ||
+        scout == undefined
+      ) {
+        this.isAlertVisible = true;
+        window.scrollTo(0, 0);
+        return;
       }
+      let docId = "match-" + matchNumber + "-team-" + number;
+      db.collection("matchData")
+        .doc(docId)
+        .set({
+          scout,
+          number,
+          moveAuto,
+          autoHighBox,
+          autoMidBox,
+          autoLowBox,
+          autoHighCone,
+          autoMidCone,
+          autoLowCone,
+          engageStatusAuto,
+
+          teleopHighCone,
+          teleopMidCone,
+          teleopLowCone,
+          teleopHighBox,
+          teleopMidBox,
+          teleopLowBox,
+          engageStatus,
+          parkTeleop,
+          numLinks,
+          coopBonus,
+          otherNotes,
+        })
+        .then(() => {
+          console.log("Document successfully written!");
+          this.readmatchData();
+        })
+        .catch((error) => {
+          console.error("Error writing document: ", error);
+        });
     },
     readmatchData() {
       this.form.matchData = [];
