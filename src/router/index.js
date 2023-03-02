@@ -5,6 +5,7 @@ const PitForm = () => import('../components/PitForm.vue')
 const AutoTable = () => import('../components/AutoTable.vue')
 const TeleopTable = () => import('../components/TeleopTable.vue')
 const TeamList = () => import('../components/TeamList.vue')
+const PitTable = () => import('../components/PitTable.vue')
 
 const routes = [
     { path: '/', component: MatchFrom, name: 'MatchForm'},
@@ -12,6 +13,7 @@ const routes = [
     { path: '/auto', component: AutoTable, name: 'AutoTable'},
     { path: '/teleop', component: TeleopTable, name: 'TeleopTable' },
     { path: '/teams', component: TeamList, name: 'TeamList', title: 'Team List'},
+    { path: '/table', component: PitTable, name: 'PitTable', title: 'Pit Table'},
   ];
 
 const router = createRouter({
