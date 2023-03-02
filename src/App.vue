@@ -8,7 +8,7 @@
         <router-view />
       </v-container>
     </v-main>
-    <v-bottom-navigation horizontal mode="shift" :max-width="mobile ? '400px' : '600px'">
+    <v-bottom-navigation horizontal mode="shift">
       <v-btn
         prepend-icon="mdi-form-select"
         title="Match Form"
@@ -62,21 +62,8 @@
 </template>
 
 <script>
-import { onMounted } from "vue";
-import { useDisplay } from "vuetify";
 
 export default {
-  name: "App",
-  data: () => ({ drawer: null }),
-  setup() {
-    const { mobile } = useDisplay();
-
-    onMounted(() => {
-      console.log(mobile.value); // false
-    });
-  },
-  methods: {
-    
-  }
+  name: "App"
 };
 </script>

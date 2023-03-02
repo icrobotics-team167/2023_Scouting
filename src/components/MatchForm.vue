@@ -170,7 +170,6 @@
         auto-grow
       ></v-textarea>
       <v-btn
-        type="submit"
         @click="
           addMatchData(
             form.scout,
