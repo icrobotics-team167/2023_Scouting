@@ -1,68 +1,205 @@
 <template>
   <v-form v-model="valid" ref="form">
     <v-container>
-        <h1 class>Match Scouting</h1>
-      <v-text-field v-model="form.number" label="Team Number" required></v-text-field>
-      <v-text-field v-model="form.scout" label="Scout Name" required></v-text-field>
+      <v-text-field
+        v-model="form.number"
+        label="Team Number"
+        required
+      ></v-text-field>
+      <v-text-field
+        v-model="form.scout"
+        label="Scout Name"
+        required
+      ></v-text-field>
       <v-row>
-        <h2 class>Auto Form</h2>
+        <h1>Auto Form</h1>
       </v-row>
       <v-row>
         <v-col>
-          <v-checkbox v-model="form.moveAuto" label="Moved in Auto?"></v-checkbox>
-          <v-text-field type="number" v-model="form.autoHighCone" label="Times Scored High (cone)" min=0 value=0></v-text-field>
-          <v-text-field type="number" v-model="form.autoMidCone" label="Times Scored Mid (cone)" min=0 value=0></v-text-field>
-          <v-text-field type="number" v-model="form.autoLowCone" label="Times Scored Low (cone)" min=0  value=0></v-text-field>
-          <v-text-field type="number" v-model="form.autoHighBox" label="Times Scored High (box)" min=0  value=0></v-text-field>
-          <v-text-field type="number" v-model="form.autoMidBox" label="Times Scored Mid (box)" min=0  value=0></v-text-field>
-          <v-text-field type="number" v-model="form.autoLowBox" label="Times Scored Low (box)" min=0 value = 0></v-text-field>
-           <v-slider v-model="form.engageStatusAuto" max=2 min=0 step=1 show-ticks="always" :ticks="tickLabels" tick-size="4"></v-slider>
+          <v-container>
+            <v-row>
+              <h3 class>CONES</h3>
+            </v-row>
+            <v-row justify="space-between"
+              ><v-btn v-on:click="form.autoHighCone--"> - </v-btn>
+              {{ form.autoHighCone + " High" }}
+              <v-btn v-on:click="form.autoHighCone++"> + </v-btn>
+            </v-row>
+          </v-container>
+          <v-container>
+            <v-row justify="space-between"
+              ><v-btn v-on:click="form.autoMidCone--"> - </v-btn>
+              {{ form.autoMidCone + " Mid" }}
+              <v-btn v-on:click="form.autoMidCone++"> + </v-btn></v-row
+            >
+          </v-container>
+          <v-container>
+            <v-row justify="space-between">
+              <v-btn v-on:click="form.autoLowCone--"> - </v-btn>
+              {{ form.autoLowCone + " Low" }}
+              <v-btn v-on:click="form.autoLowCone++"> + </v-btn>
+            </v-row>
+          </v-container>
         </v-col>
-      </v-row>
-      <v-row>
-        <h2>Teleop Form</h2>
+        <v-col>
+          <v-container>
+            <v-row>
+              <h3 class>BOXES</h3>
+            </v-row>
+            <v-row justify="space-between"
+              ><v-btn v-on:click="form.autoHighBox--"> - </v-btn>
+              {{ form.autoHighBox + " High" }}
+              <v-btn v-on:click="form.autoHighBox++"> + </v-btn>
+            </v-row>
+          </v-container>
+          <v-container>
+            <v-row justify="space-between"
+              ><v-btn v-on:click="form.autoMidBox--"> - </v-btn>
+              {{ form.autoMidBox + " Mid" }}
+              <v-btn v-on:click="form.autoMidBox++"> + </v-btn></v-row
+            >
+          </v-container>
+          <v-container>
+            <v-row justify="space-between">
+              <v-btn v-on:click="form.autoLowBox--"> - </v-btn>
+              {{ form.autoLowBox + " Low" }}
+              <v-btn v-on:click="form.autoLowBox++"> + </v-btn>
+            </v-row>
+          </v-container>
+        </v-col>
       </v-row>
       <v-row>
         <v-col>
-          <v-text-field type="number" v-model="form.teleopHighCone" label="Times Scored High (cone)" min=0 value=0></v-text-field>
-          <v-text-field type="number" v-model="form.teleopMidCone" label="Times Scored Mid (cone)" min=0 value=0></v-text-field>
-          <v-text-field type="number" v-model="form.teleopLowCone" label="Times Scored Low (cone)" min=0 value=0></v-text-field>
-          <v-text-field type="number" v-model="form.teleopHighBox" label="Times Scored High (box)" min=0 value=0></v-text-field>
-          <v-text-field type="number" v-model="form.teleopMidBox" label="Times Scored Mid (box)" min=0 value=0></v-text-field>
-          <v-text-field type="number" v-model="form.teleopLowBox" label="Times Scored Low (box)" min=0 value=0></v-text-field>
-          <v-slider v-model="form.engageStatus" max=2 min=0 step=1 show-ticks="always" :ticks="tickLabels" tick-size="4"></v-slider>
-          <v-checkbox v-model="form.parkTeleop" label="Score for Parking?"></v-checkbox>
-          <v-text-field type="number" v-model="form.numLinks" label="Number of Links Formed"  value=0></v-text-field>
-          <v-checkbox v-model="form.coopBonus" label="Coopertition Bonus?"></v-checkbox>
-          <v-textarea v-model="form.otherNotes" label="Notes" auto-grow></v-textarea>
+          <v-slider
+            v-model="form.engageStatusAuto"
+            max="2"
+            min="0"
+            step="1"
+            show-ticks="always"
+            :ticks="tickLabels"
+            tick-size="4"
+          ></v-slider>
         </v-col>
       </v-row>
-      <v-btn type="submit" @click="
-        addMatchData(
-          form.scout,
-          form.number,
-          form.moveAuto,
-          form.autoHighBox,
-          form.autoMidBox,
-          form.autoLowBox,
-          form.autoHighCone,
-          form.autoMidCone,
-          form.autoLowCone,
-          form.engageStatusAuto,
-          form.teleopHighCone,
-          form.teleopMidCone,
-          form.teleopLowCone,
-          form.teleopHighBox,
-          form.teleopMidBox,
-          form.teleopLowBox,
-          form.engageStatus,
-          form.parkTeleop,
-          form.numLinks,
-          form.coopBonus,
-          form.otherNotes
-        )
-
-      " block class="mt-2">Submit</v-btn>
+      <v-row>
+          <v-checkbox
+            v-model="form.moveAuto"
+            label="Moved in Auto?"
+          ></v-checkbox>
+      </v-row>
+      <h1>Teleop Form</h1>
+      <v-row>
+        <v-col>
+          <v-container>
+            <v-row>
+              <h3 class>CONES</h3>
+            </v-row>
+            <v-row justify="space-between"
+              ><v-btn v-on:click="form.teleopHighCone--"> - </v-btn>
+              {{ form.teleopHighCone + " High" }}
+              <v-btn v-on:click="form.teleopHighCone++"> + </v-btn>
+            </v-row>
+          </v-container>
+          <v-container>
+            <v-row justify="space-between"
+              ><v-btn v-on:click="form.teleopMidCone--"> - </v-btn>
+              {{ form.teleopMidCone + " Mid" }}
+              <v-btn v-on:click="form.teleopMidCone++"> + </v-btn></v-row
+            >
+          </v-container>
+          <v-container>
+            <v-row justify="space-between">
+              <v-btn v-on:click="form.teleopLowCone--"> - </v-btn>
+              {{ form.teleopLowCone + " Low" }}
+              <v-btn v-on:click="form.teleopLowCone++"> + </v-btn>
+            </v-row>
+          </v-container>
+        </v-col>
+        <v-col>
+          <v-container>
+            <v-row>
+              <h3 class>BOXES</h3>
+            </v-row>
+            <v-row justify="space-between"
+              ><v-btn v-on:click="form.teleopHighBox--"> - </v-btn>
+              {{ form.teleopHighBox + " High" }}
+              <v-btn v-on:click="form.teleopHighBox++"> + </v-btn>
+            </v-row>
+          </v-container>
+          <v-container>
+            <v-row justify="space-between"
+              ><v-btn v-on:click="form.teleopMidBox--"> - </v-btn>
+              {{ form.teleopMidBox + " Mid" }}
+              <v-btn v-on:click="form.teleopMidBox++"> + </v-btn></v-row
+            >
+          </v-container>
+          <v-container>
+            <v-row justify="space-between">
+              <v-btn v-on:click="form.teleopLowBox--"> - </v-btn>
+              {{ form.teleopLowBox + " Low" }}
+              <v-btn v-on:click="form.teleopLowBox++"> + </v-btn>
+            </v-row>
+          </v-container>
+        </v-col>
+      </v-row>
+      <v-slider
+        v-model="form.engageStatus"
+        max="2"
+        min="0"
+        step="1"
+        show-ticks="always"
+        :ticks="tickLabels"
+        tick-size="4"
+      ></v-slider>
+      <v-checkbox
+        v-model="form.parkTeleop"
+        label="Score for Parking?"
+      ></v-checkbox>
+      <v-text-field
+        type="number"
+        v-model="form.numLinks"
+        label="Number of Links Formed" min="0"
+      ></v-text-field>
+      <v-checkbox
+        v-model="form.coopBonus"
+        label="Coopertition Bonus?"
+      ></v-checkbox>
+      <v-textarea
+        v-model="form.otherNotes"
+        label="Notes"
+        auto-grow
+      ></v-textarea>
+      <v-btn
+        type="submit"
+        @click="
+          addMatchData(
+            form.scout,
+            form.number,
+            form.moveAuto,
+            form.autoHighBox,
+            form.autoMidBox,
+            form.autoLowBox,
+            form.autoHighCone,
+            form.autoMidCone,
+            form.autoLowCone,
+            form.engageStatusAuto,
+            form.teleopHighCone,
+            form.teleopMidCone,
+            form.teleopLowCone,
+            form.teleopHighBox,
+            form.teleopMidBox,
+            form.teleopLowBox,
+            form.engageStatus,
+            form.parkTeleop,
+            form.numLinks,
+            form.coopBonus,
+            form.otherNotes
+          )
+        "
+        block
+        class="mt-2"
+        >Submit</v-btn
+      >
     </v-container>
   </v-form>
 </template>
@@ -100,10 +237,10 @@ export default {
       matchData: [],
     },
     tickLabels: {
-          0: 'Not Engaged',
-          1: 'Engaged',
-          2: 'Docked'
-        },
+      0: "Not Engaged",
+      1: "Engaged",
+      2: "Docked",
+    },
   }),
   methods: {
     addMatchData(
@@ -142,6 +279,7 @@ export default {
             autoMidCone,
             autoLowCone,
             engageStatusAuto,
+
             teleopHighCone,
             teleopMidCone,
             teleopLowCone,
@@ -194,7 +332,6 @@ export default {
               numLinks: doc.data().numLinks,
               coopBonus: doc.data().coopBonus,
               otherNotes: doc.data().otherNotes,
-
             });
           });
           this.form = {
@@ -232,3 +369,12 @@ export default {
   },
 };
 </script>
+<style>
+.cone-btn {
+  color: plum !important;
+}
+
+.cube-btn {
+  color: yellow;
+}
+</style>

@@ -12,12 +12,10 @@ const myCustomLightTheme = {
   colors: {
     background: '#0b5c06',
     surface: '#000000',
-    primary: '#000000',
-    'primary-darken-1': '#000000',
+    primary: '#FFFF00',
     secondary: '#000000',
-    'secondary-darken-1': '#000000',
     error: '#000000',
-    info: '#000000',
+    info: '#FFFF00',
     success: '#000000',
     warning: '#000000',
     text: '#000000'
