@@ -321,7 +321,7 @@ export default {
           scout = "";
           number = "";
           matchNumber = 0;
-          moveAuto = "";
+          moveAuto = false;
           autoHighBox = 0;
           autoMidBox = 0;
           autoLowBox = 0;
@@ -336,9 +336,9 @@ export default {
           teleopMidBox = 0;
           teleopLowBox = 0;
           engageStatus = 0;
-          parkTeleop = 0;
+          parkTeleop = false;
           numLinks = 0;
-          coopBonus = 0;
+          coopBonus = false;
           otherNotes = "";
           window.scrollTo(0, 0);
         })
