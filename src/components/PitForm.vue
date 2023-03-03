@@ -298,27 +298,27 @@ export default {
         .then(() => {
           console.log("Document successfully written!");
           window.scrollTo(0, 0);
-          number = "";
-          rookie = "";
-          coach = "";
-          driveBase = "";
-          moveAuto = "";
-          autoHigh = "";
-          autoMid = "";
-          autoLow = "";
-          engageStatusAuto = "";
-          teleopHigh = "";
-          teleopMid = "";
-          teleopLow = "";
-          engageStatus = "";
-          parkTeleop = "";
-          numLinks = "";
-          coopBonus = "";
-          otherNotes = "";
-          autoCones = "";
-          autoBoxes = "";
-          teleopCones = "";
-          teleopBoxes = "";
+            number=0;
+            rookie=false;
+            coach= "";
+            driveBase= "";
+            moveAuto= false;
+            autoHigh=0;
+            autoMid=0;
+            autoLow=0;
+            engageStatusAuto=0;
+            teleopHigh=0;
+            teleopMid=0;
+            teleopLow=0;
+            engageStatus=0;
+            parkTeleop=false;
+            numLinks=0;
+            coopBonus=false;
+            otherNotes= "";
+            autoCones=0;
+            autoBoxes=0;
+            teleopCones=0;
+            teleopBoxes=0;
         })
         .catch((error) => {
           console.error("Error writing document: ", error);
