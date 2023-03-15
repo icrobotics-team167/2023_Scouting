@@ -6,37 +6,37 @@
       <tr>
         <th class="text-left">Scout Name</th>
         <th class="text-left">Team Number</th>
-        <th class="text-left">Auto: Moved</th>
-        <th class="text-left">Auto: Cones Scored High</th>
-        <th class="text-left">Auto: Cones Scored Mid</th>
-        <th class="text-left">Auto: Cones Scored Low</th>
-        <th class="text-left">Auto: Boxes Scored High</th>
-        <th class="text-left">Auto: Boxes Scored Mid</th>
-        <th class="text-left">Auto: Boxes Scored Low</th>
-        <th class="text-left">Auto: Dock/Engage</th>
+        <th class="text-left">Left Community</th>
+        <th class="text-left">Cones Scored High</th>
+        <th class="text-left"> Cones Scored Mid</th>
+        <th class="text-left"> Cones Scored Low</th>
+        <th class="text-left"> Cubes Scored High</th>
+        <th class="text-left"> Cubes Scored Mid</th>
+        <th class="text-left"> Cubes Scored Low</th>
+        <th class="text-left"> Dock/Engage</th>
       </tr>
     </thead>
     <tbody>
       <tr v-for="item in tableData" :key="item.name">
         <td>{{ item.scout }}</td>
         <td>{{ item.number }}</td>
-        <td>{{ item.moveAuto }}</td>
-        <td>{{ item.autoHighCone }}</td>
+        <td>{{ item.leftCommunity }}</td>
+        <td>{{ item.HighCone }}</td>
         <td>{{ item.autoMidCone }}</td>
         <td>{{ item.autoLowCone }}</td>
-        <td>{{ item.autoHighBox }}</td>
-        <td>{{ item.autoMidBox }}</td>
-        <td>{{ item.autoLowBox }}</td>
+        <td>{{ item.autoHighCubes }}</td>
+        <td>{{ item.autoMidCubes }}</td>
+        <td>{{ item.autoLowCubes }}</td>
         <td>{{ item.engageStatusAuto }}</td>
       </tr>
     </tbody>
   </v-table>
 </template>
 <script>
-import firebase from "../firebaseInit";
-import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
+import { getDatabase, ref, query, limitToLast } from "firebase/database";
+import firebaseApp from "../firebaseInit";
 
-const db = getFirestore(firebase);
+const db = getDatabase(firebaseApp);
 
 let tableData = [];
 
@@ -48,38 +48,27 @@ export default {
   }),
   methods: {
     async getMatchData(db) {
-      const matchDataCol = collection(db, "matchData");
-      const matchDataSnapshot = await getDocs(matchDataCol);
-      const matchDataList = matchDataSnapshot.docs.map((doc) => doc.data());
-      return matchDataList;
+      return query(ref(db, 'iowa/match/'), limitToLast(200));
     },
   },
   beforeMount() {
     tableData = new Array();
     this.getMatchData(db).then((querySnapshot) => {
+      console.log(querySnapshot)
       querySnapshot.forEach((doc) => {
         tableData.push({
           id: doc.id,
-          scout: doc.scout,
+          scoutName: doc.scoutName,
           number: doc.number,
-          moveAuto: doc.moveAuto,
-          autoHighBox: doc.autoHighBox,
-          autoMidBox: doc.autoMidBox,
-          autoLowBox: doc.autoLowBox,
+          matchNumber: doc.matchNumber,
+          leaveCommunity: doc.leaveCommunity,
+          autoHighCubes: doc.autoHighCubes,
+          autoMidCubes: doc.autoMidCubes,
+          autoLowCubes: doc.autoLowCubes,
           autoHighCone: doc.autoHighCone,
           autoMidCone: doc.autoMidCone,
           autoLowCone: doc.autoLowCone,
           engageStatusAuto: doc.engageStatusAuto,
-          teleopHighCone: doc.teleopHighCone,
-          teleopMidCone: doc.teleopMidCone,
-          teleopLowCone: doc.teleopLowCone,
-          teleopHighBox: doc.teleopHighBox,
-          teleopMidBox: doc.teleopMidBox,
-          teleopLowBox: doc.teleopLowBox,
-          engageStatus: doc.engageStatus,
-          parkTeleop: doc.parkTeleop,
-          numLinks: doc.numLinks,
-          coopBonus: doc.coopBonus,
           otherNotes: doc.otherNotes,
         });
       });

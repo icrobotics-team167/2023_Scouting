@@ -1,8 +1,14 @@
 <template>
-  <v-form v-model="valid" ref="form">
+  <v-form v-model="valid" ref="pit_form">
+    <v-alert
+      v-if="isSuccessful"
+      text="Form successfully submitted."
+      color="info"
+      closable
+    ></v-alert>
     <v-alert
       v-if="isAlertVisible"
-      text="Missing required information: Team number, scout name, isRookie, drive coach name, or drive base."
+      text="Missing required information: Team number, scout name, rookie team, drive coach name, or drive base."
       color="error"
       closable
     ></v-alert>
@@ -20,12 +26,15 @@
         <v-text-field
           v-model.number="number"
           label="Team Number"
+          type="number"
           required
+          v-on:click="isSuccessful=false"
         ></v-text-field>
         <v-text-field
-          v-model="scout"
+          v-model="scoutName"
           label="Scout Name"
           required
+          v-on:click="isSuccessful=false"
         ></v-text-field>
         <v-checkbox v-model="rookie" label="Rookie team?"></v-checkbox>
         <v-text-field
@@ -44,21 +53,18 @@
       </v-row>
       <v-row>
         <v-col>
-          <v-checkbox
-            v-model="moveAuto"
-            label="Can move in Auto?"
-          ></v-checkbox>
+          <v-checkbox v-model="leaveCommunity" label="Leave Community in Auto?"></v-checkbox>
         </v-col>
         <v-col>
           <v-checkbox
             v-model="autoCones"
-            label="Can score cones in Auto?"
+            label="Score Cones in Auto?"
           ></v-checkbox>
         </v-col>
         <v-col>
           <v-checkbox
-            v-model="autoBoxes"
-            label="Can score boxes in Auto?"
+            v-model="autoCubes"
+            label="Score Cubes in Auto?"
           ></v-checkbox>
         </v-col>
       </v-row>
@@ -102,13 +108,13 @@
         <v-col>
           <v-checkbox
             v-model="teleopCones"
-            label="Can score cones in Teleop?"
+            label="Score Cones in Teleop?"
           ></v-checkbox>
         </v-col>
         <v-col>
           <v-checkbox
-            v-model="teleopBoxes"
-            label="Can score boxes in Teleop?"
+            v-model="teleopCubes"
+            label="Score Cubes in Teleop?"
           ></v-checkbox>
         </v-col>
       </v-row>
@@ -143,20 +149,11 @@
             :ticks="tickLabels"
             tick-size="4"
           ></v-slider>
-          <v-text-field
-            v-model="numLinks"
-            label="Predicted Number of Links"
-            min="0"
-          ></v-text-field>
           <v-checkbox
             v-model="coopBonus"
             label="Aiming For Coopertition Bonus?"
           ></v-checkbox>
-          <v-textarea
-            v-model="otherNotes"
-            label="Notes"
-            auto-grow
-          ></v-textarea>
+          <v-textarea v-model="otherNotes" label="Notes" auto-grow></v-textarea>
         </v-col>
       </v-row>
       <v-btn
@@ -164,10 +161,10 @@
           addPitData(
             number,
             rookie,
-            scout,
+            scoutName,
             coach,
             driveBase,
-            moveAuto,
+            leaveCommunity,
             autoHigh,
             autoMid,
             autoLow,
@@ -176,14 +173,13 @@
             teleopMid,
             teleopLow,
             engageStatus,
-            parkTeleop,
-            numLinks,
+            parkInCommunity,
             coopBonus,
             otherNotes,
             autoCones,
-            autoBoxes,
+            autoCubes,
             teleopCones,
-            teleopBoxes
+            teleopCubes
           )
         "
         block
@@ -194,9 +190,10 @@
   </v-form>
 </template>
 <script>
-import firebase from "../firebaseInit";
+import { getDatabase, ref, set } from "firebase/database";
+import firebaseApp from "../firebaseInit";
 
-const db = firebase.firestore();
+const db = getDatabase(firebaseApp);
 
 export default {
   name: "PitForm",
@@ -204,12 +201,13 @@ export default {
     valid: false,
     isAlertVisible: false,
     isDocumentError: false,
+    isSuccessful: false,
     number: 0,
-    scout: "",
+    scoutName: "",
     rookie: false,
     coach: "",
     driveBase: "",
-    moveAuto: false,
+    leaveCommunity: false,
     autoHigh: 0,
     autoMid: 0,
     autoLow: 0,
@@ -218,14 +216,13 @@ export default {
     teleopMid: 0,
     teleopLow: 0,
     engageStatus: 0,
-    parkTeleop: false,
-    numLinks: 0,
+    parkInCommunity: false,
     coopBonus: false,
     otherNotes: "",
     autoCones: 0,
-    autoBoxes: 0,
+    autoCubes: 0,
     teleopCones: 0,
-    teleopBoxes: 0,
+    teleopCubes: 0,
     tickLabels: {
       0: "Can't Engage",
       1: "Can Engage",
@@ -238,8 +235,8 @@ export default {
       rookie,
       coach,
       driveBase,
-      scout,
-      moveAuto,
+      scoutName,
+      leaveCommunity,
       autoHigh,
       autoMid,
       autoLow,
@@ -248,83 +245,57 @@ export default {
       teleopMid,
       teleopLow,
       engageStatus,
-      parkTeleop,
-      numLinks,
+      parkInCommunity,
       coopBonus,
       otherNotes,
       autoCones,
-      autoBoxes,
+      autoCubes,
       teleopCones,
-      teleopBoxes
+      teleopCubes
     ) {
       if (
-        number == undefined ||
+        number == 0 ||
         rookie == undefined ||
         coach == undefined ||
         driveBase == undefined ||
-        scout == undefined
+        scoutName == undefined
       ) {
         this.isAlertVisible = true;
         window.scrollTo(0, 0);
         return;
       }
-      let timestamp = Date.now();
-      db.collection("pitData")
-        .doc("team-" + number)
-        .set({
-          number,
-          rookie,
-          coach,
-          driveBase,
-          moveAuto,
-          autoHigh,
-          autoMid,
-          autoLow,
-          engageStatusAuto,
-          teleopHigh,
-          teleopMid,
-          teleopLow,
-          engageStatus,
-          parkTeleop,
-          numLinks,
-          coopBonus,
-          otherNotes,
-          autoCones,
-          autoBoxes,
-          teleopCones,
-          teleopBoxes,
-          timestamp,
-        })
-        .then(() => {
-          console.log("Document successfully written!");
-          window.scrollTo(0, 0);
-            number=0;
-            rookie=false;
-            coach= "";
-            driveBase= "";
-            moveAuto= false;
-            autoHigh=0;
-            autoMid=0;
-            autoLow=0;
-            engageStatusAuto=0;
-            teleopHigh=0;
-            teleopMid=0;
-            teleopLow=0;
-            engageStatus=0;
-            parkTeleop=false;
-            numLinks=0;
-            coopBonus=false;
-            otherNotes= "";
-            autoCones=0;
-            autoBoxes=0;
-            teleopCones=0;
-            teleopBoxes=0;
-        })
-        .catch((error) => {
-          console.error("Error writing document: ", error);
+      let docId = "team-" + number;
+      try {
+        set(ref(db, "iowa/pit/" + docId), {
+        number: number,
+        rookie: rookie,
+        coach: coach,
+        driveBase: driveBase,
+        scoutName: scoutName,
+        leaveCommunity: leaveCommunity,
+        autoHigh: autoHigh,
+        autoMid: autoMid,
+        autoLow: autoLow,
+        engageStatusAuto: engageStatusAuto,
+        teleopHigh: teleopHigh,
+        teleopMid: teleopMid,
+        teleopLow: teleopLow,
+        engageStatus: engageStatus,
+        parkInCommunity: parkInCommunity,
+        coopBonus: coopBonus,
+        otherNotes: otherNotes,
+        autoCones: autoCones,
+        autoCubes: autoCubes,
+        teleopCones: teleopCones,
+        teleopCubes: teleopCubes,
+      })
+      this.$refs.pit_form.reset();
+      } catch(error){
+        console.error("Error writing document: ", error);
           this.isDocumentError = true;
-          window.scrollTo(0, 0);
-        });
+      }
+      this.isSuccessful = !this.isDocumentError;
+      window.scrollTo(0, 0);
     },
   },
 };

@@ -32,7 +32,7 @@ export default {
     };
   },
   created() {
-    fetch("https://www.thebluealliance.com/api/v3/event/2023mndu2/teams", {
+    fetch("https://www.thebluealliance.com/api/v3/event/2023iacf/teams", {
     method: "GET",
     headers: {
       "X-TBA-Auth-Key":
