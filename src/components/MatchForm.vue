@@ -25,8 +25,7 @@
       <v-col>
         <v-text-field
           v-model.number="matchNumber"
-          label="Match Number"
-          type="number"
+          label="Match Number (Add P- if practice match)"
           required
           v-on:click="isSuccessful=false"
         >
