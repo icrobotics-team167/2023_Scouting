@@ -1,5 +1,11 @@
 <template>
-  <v-form v-model="valid" ref="form">
+  <v-form v-model="valid" ref="match_form">
+    <v-alert
+      v-if="isSuccessful"
+      text="Form successfully submitted."
+      color="info"
+      closable
+    ></v-alert>
     <v-alert
       v-if="isAlertVisible"
       text="Missing required information: Match number, team number, scout name."
@@ -22,17 +28,21 @@
           label="Match Number"
           type="number"
           required
+          v-on:click="isSuccessful=false"
         >
         </v-text-field>
         <v-text-field
           v-model.number="number"
           label="Team Number"
+          type="number"
           required
+          v-on:click="isSuccessful=false"
         ></v-text-field>
         <v-text-field
-          v-model="scout"
+          v-model="scoutName"
           label="Scout Name"
           required
+          v-on:click="isSuccessful=false"
         ></v-text-field>
       </v-col>
       <v-row>
@@ -68,26 +78,26 @@
         <v-col>
           <v-container>
             <v-row>
-              <h3 class>BOXES</h3>
+              <h3 class>CUBES</h3>
             </v-row>
             <v-row justify="space-between"
-              ><v-btn v-on:click="autoHighBox--"> - </v-btn>
-              {{ autoHighBox + " High" }}
-              <v-btn v-on:click="autoHighBox++"> + </v-btn>
+              ><v-btn v-on:click="autoHighCubes--"> - </v-btn>
+              {{ autoHighCubes + " High" }}
+              <v-btn v-on:click="autoHighCubes++"> + </v-btn>
             </v-row>
           </v-container>
           <v-container>
             <v-row justify="space-between"
-              ><v-btn v-on:click="autoMidBox--"> - </v-btn>
-              {{ autoMidBox + " Mid" }}
-              <v-btn v-on:click="autoMidBox++"> + </v-btn></v-row
+              ><v-btn v-on:click="autoMidCubes--"> - </v-btn>
+              {{ autoMidCubes + " Mid" }}
+              <v-btn v-on:click="autoMidCubes++"> + </v-btn></v-row
             >
           </v-container>
           <v-container>
             <v-row justify="space-between">
-              <v-btn v-on:click="autoLowBox--"> - </v-btn>
-              {{ autoLowBox + " Low" }}
-              <v-btn v-on:click="autoLowBox++"> + </v-btn>
+              <v-btn v-on:click="autoLowCubes--"> - </v-btn>
+              {{ autoLowCubes + " Low" }}
+              <v-btn v-on:click="autoLowCubes++"> + </v-btn>
             </v-row>
           </v-container>
         </v-col>
@@ -106,7 +116,10 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-checkbox v-model="moveAuto" label="Moved in Auto?"></v-checkbox>
+        <v-checkbox
+          v-model="leaveCommunity"
+          label="Left Community in Auto?"
+        ></v-checkbox>
       </v-row>
       <h1>Teleop Form</h1>
       <v-row>
@@ -139,26 +152,26 @@
         <v-col>
           <v-container>
             <v-row>
-              <h3 class>BOXES</h3>
+              <h3 class>CUBES</h3>
             </v-row>
             <v-row justify="space-between"
-              ><v-btn v-on:click="teleopHighBox--"> - </v-btn>
-              {{ teleopHighBox + " High" }}
-              <v-btn v-on:click="teleopHighBox++"> + </v-btn>
+              ><v-btn v-on:click="teleopHighCubes--"> - </v-btn>
+              {{ teleopHighCubes + " High" }}
+              <v-btn v-on:click="teleopHighCubes++"> + </v-btn>
             </v-row>
           </v-container>
           <v-container>
             <v-row justify="space-between"
-              ><v-btn v-on:click="teleopMidBox--"> - </v-btn>
-              {{ teleopMidBox + " Mid" }}
-              <v-btn v-on:click="teleopMidBox++"> + </v-btn></v-row
+              ><v-btn v-on:click="teleopMidCubes--"> - </v-btn>
+              {{ teleopMidCubes + " Mid" }}
+              <v-btn v-on:click="teleopMidCubes++"> + </v-btn></v-row
             >
           </v-container>
           <v-container>
             <v-row justify="space-between">
-              <v-btn v-on:click="teleopLowBox--"> - </v-btn>
-              {{ teleopLowBox + " Low" }}
-              <v-btn v-on:click="teleopLowBox++"> + </v-btn>
+              <v-btn v-on:click="teleopLowCubes--"> - </v-btn>
+              {{ teleopLowCubes + " Low" }}
+              <v-btn v-on:click="teleopLowCubes++"> + </v-btn>
             </v-row>
           </v-container>
         </v-col>
@@ -172,25 +185,21 @@
         :ticks="tickLabels"
         tick-size="4"
       ></v-slider>
-      <v-checkbox v-model="parkTeleop" label="Score for Parking?"></v-checkbox>
-      <v-text-field
-        type="number"
-        v-model="numLinks"
-        label="Number of Links Formed"
-        min="0"
-      ></v-text-field>
-      <v-checkbox v-model="coopBonus" label="Coopertition Bonus?"></v-checkbox>
+      <v-checkbox
+        v-model="parkInCommunity"
+        label="Parked? (Ending game in Community, not on Charging Station)"
+      ></v-checkbox>
       <v-textarea v-model="otherNotes" label="Notes" auto-grow></v-textarea>
       <v-btn
         @click="
           addMatchData(
-            scout,
+            scoutName,
             number,
             matchNumber,
-            moveAuto,
-            autoHighBox,
-            autoMidBox,
-            autoLowBox,
+            leaveCommunity,
+            autoHighCubes,
+            autoMidCubes,
+            autoLowCubes,
             autoHighCone,
             autoMidCone,
             autoLowCone,
@@ -198,13 +207,11 @@
             teleopHighCone,
             teleopMidCone,
             teleopLowCone,
-            teleopHighBox,
-            teleopMidBox,
-            teleopLowBox,
+            teleopHighCubes,
+            teleopMidCubes,
+            teleopLowCubes,
             engageStatus,
-            parkTeleop,
-            numLinks,
-            coopBonus,
+            parkInCommunity,
             otherNotes
           )
         "
@@ -216,9 +223,10 @@
   </v-form>
 </template>
 <script>
-import firebase from "../firebaseInit";
+import { getDatabase, ref, set } from "firebase/database";
+import firebaseApp from "../firebaseInit";
 
-const db = firebase.firestore();
+const db = getDatabase(firebaseApp);
 
 export default {
   name: "MatchForm",
@@ -226,13 +234,14 @@ export default {
     valid: false,
     isAlertVisible: false,
     isDocumentError: false,
-    scout: "",
-    number: "",
+    isSuccessful: false,
+    scoutName: "",
+    number: 0,
     matchNumber: 0,
-    moveAuto: false,
-    autoHighBox: 0,
-    autoMidBox: 0,
-    autoLowBox: 0,
+    leaveCommunity: false,
+    autoHighCubes: 0,
+    autoMidCubes: 0,
+    autoLowCubes: 0,
     autoHighCone: 0,
     autoMidCone: 0,
     autoLowCone: 0,
@@ -240,13 +249,11 @@ export default {
     teleopHighCone: 0,
     teleopMidCone: 0,
     teleopLowCone: 0,
-    teleopHighBox: 0,
-    teleopMidBox: 0,
-    teleopLowBox: 0,
+    teleopHighCubes: 0,
+    teleopMidCubes: 0,
+    teleopLowCubes: 0,
     engageStatus: 0,
-    parkTeleop: false,
-    numLinks: 0,
-    coopBonus: false,
+    parkInCommunity: false,
     otherNotes: "",
     tickLabels: {
       0: "Not Engaged",
@@ -256,13 +263,13 @@ export default {
   }),
   methods: {
     addMatchData(
-      scout,
+      scoutName,
       number,
       matchNumber,
-      moveAuto,
-      autoHighBox,
-      autoMidBox,
-      autoLowBox,
+      leaveCommunity,
+      autoHighCubes,
+      autoMidCubes,
+      autoLowCubes,
       autoHighCone,
       autoMidCone,
       autoLowCone,
@@ -270,83 +277,49 @@ export default {
       teleopHighCone,
       teleopMidCone,
       teleopLowCone,
-      teleopHighBox,
-      teleopMidBox,
-      teleopLowBox,
+      teleopHighCubes,
+      teleopMidCubes,
+      teleopLowCubes,
       engageStatus,
-      parkTeleop,
-      numLinks,
-      coopBonus,
+      parkInCommunity,
       otherNotes
     ) {
-      if (
-        number == undefined ||
-        matchNumber == undefined ||
-        scout == undefined
-      ) {
+      if (number == 0 || matchNumber == 0 || scoutName == undefined) {
         this.isAlertVisible = true;
         window.scrollTo(0, 0);
         return;
       }
       let docId = "match-" + matchNumber + "-team-" + number;
-      let timestamp = Date.now();
-      db.collection("matchData")
-        .doc(docId)
-        .set({
-          scout,
-          number,
-          matchNumber,
-          moveAuto,
-          autoHighBox,
-          autoMidBox,
-          autoLowBox,
-          autoHighCone,
-          autoMidCone,
-          autoLowCone,
-          engageStatusAuto,
-          teleopHighCone,
-          teleopMidCone,
-          teleopLowCone,
-          teleopHighBox,
-          teleopMidBox,
-          teleopLowBox,
-          engageStatus,
-          parkTeleop,
-          numLinks,
-          coopBonus,
-          otherNotes,
-          timestamp,
-        })
-        .then(() => {
-          scout = "";
-          number = "";
-          matchNumber = 0;
-          moveAuto = false;
-          autoHighBox = 0;
-          autoMidBox = 0;
-          autoLowBox = 0;
-          autoHighCone = 0;
-          autoMidCone = 0;
-          autoLowCone = 0;
-          engageStatusAuto = 0;
-          teleopHighCone = 0;
-          teleopMidCone = 0;
-          teleopLowCone = 0;
-          teleopHighBox = 0;
-          teleopMidBox = 0;
-          teleopLowBox = 0;
-          engageStatus = 0;
-          parkTeleop = false;
-          numLinks = 0;
-          coopBonus = false;
-          otherNotes = "";
-          window.scrollTo(0, 0);
-        })
-        .catch((error) => {
-          console.error("Error writing document: ", error);
-          this.isDocumentError = true;
-          window.scrollTo(0, 0);
+      try {
+        set(ref(db, "iowa/match/" + docId), {
+          scoutName: scoutName,
+          number: number,
+          matchNumber: matchNumber,
+          leaveCommunity: leaveCommunity,
+          autoHighCubes: autoHighCubes,
+          autoMidCubes: autoMidCubes,
+          autoLowCubes: autoLowCubes,
+          autoHighCone: autoHighCone,
+          autoMidCone: autoMidCone,
+          autoLowCone: autoLowCone,
+          engageStatusAuto: engageStatusAuto,
+          teleopHighCubes: teleopHighCubes,
+          teleopMidCubes: teleopMidCubes,
+          teleopLowCubes: teleopLowCubes,
+          teleopHighCone: teleopHighCone,
+          teleopMidCone: teleopMidCone,
+          teleopLowCone: teleopLowCone,
+          engageStatus: engageStatus,
+          parkInCommunity: parkInCommunity,
+          otherNotes: otherNotes,
         });
+        this.$refs.match_form.reset();
+      } catch (error) {
+        console.error("Error writing document: ", error);
+        this.isDocumentError = true;
+      }
+      this.isSuccessful = !this.isDocumentError;
+      window.scrollTo(0, 0);
     },
   },
 };

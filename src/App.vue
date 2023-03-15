@@ -24,7 +24,7 @@
         :to="{ name: 'PitForm' }"
         ><span>Pit Form</span></v-btn
       >
-      <v-btn
+      <!-- <v-btn
         prepend-icon="mdi-format-list-bulleted"
         title="Pit Table"
         value="table"
@@ -44,7 +44,7 @@
         value="teleop"
         :to="{ name: 'TeleopTable' }"
         ><span>Teleop Table</span></v-btn
-      >
+      > -->
       <v-btn
         prepend-icon="mdi-format-list-bulleted"
         title="Team List"
