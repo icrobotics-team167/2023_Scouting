@@ -55,9 +55,9 @@
 </template>
 <script>
 import firebase from "../firebaseInit";
-import { getFirestore, collection, getDocs } from "firebase/firestore/lite";
+import { getDatabase, ref, onValue } from "firebase/database";
 
-const db = getFirestore(firebase);
+const database = getDatabase(firebase);
 
 let tableData = [];
 
@@ -70,17 +70,17 @@ export default {
     };
   },
   methods: {
-    async getPitData(db) {
-      const pitDataCol = collection(db, "pitData");
-      const pitDataSnapshot = await getDocs(pitDataCol);
+    async getPitData(database) {
+      const pitDataCol = ref(database, "pitData");
+      const pitDataSnapshot = await this.getPitData(pitDataCol);
       const pitDataList = pitDataSnapshot.docs.map((doc) => doc.data());
       return pitDataList;
     },
   },
   beforeMount() {
     tableData = new Array();
-    this.getPitData(db).then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
+    this.getPitData(database).then((snapshot) => {
+      snapshot.forEach((doc) => {
         tableData.push({
           id: doc.id,
           number: doc.number,
