@@ -54,23 +54,23 @@
               <h3 class>CONES</h3>
             </v-row>
             <v-row justify="space-between"
-              ><v-btn v-on:click="autoHighCone--"> - </v-btn>
+              ><v-btn v-model.number="autoHighCone" v-on:click="autoHighCone--"> - </v-btn>
               {{ autoHighCone + " High" }}
-              <v-btn v-on:click="autoHighCone++"> + </v-btn>
+              <v-btn v-model.number="autoHighCone" v-on:click="autoHighCone++"> + </v-btn>
             </v-row>
           </v-container>
           <v-container>
             <v-row justify="space-between"
-              ><v-btn v-on:click="autoMidCone--"> - </v-btn>
+              ><v-btn v-model.number="autoMidCone" v-on:click="autoMidCone--"> - </v-btn>
               {{ autoMidCone + " Mid" }}
-              <v-btn v-on:click="autoMidCone++"> + </v-btn></v-row
+              <v-btn v-model.number="autoMidCone" v-on:click="autoMidCone++"> + </v-btn></v-row
             >
           </v-container>
           <v-container>
             <v-row justify="space-between">
-              <v-btn v-on:click="autoLowCone--"> - </v-btn>
+              <v-btn v-model.number="autoLowCone" v-on:click="autoLowCone--"> - </v-btn>
               {{ autoLowCone + " Low" }}
-              <v-btn v-on:click="autoLowCone++"> + </v-btn>
+              <v-btn v-model.number="autoLowCone" v-on:click="autoLowCone++"> + </v-btn>
             </v-row>
           </v-container>
         </v-col>
@@ -80,23 +80,23 @@
               <h3 class>CUBES</h3>
             </v-row>
             <v-row justify="space-between"
-              ><v-btn v-on:click="autoHighCubes--"> - </v-btn>
+              ><v-btn v-model.number="autoHighCubes" v-on:click="autoHighCubes--"> - </v-btn>
               {{ autoHighCubes + " High" }}
-              <v-btn v-on:click="autoHighCubes++"> + </v-btn>
+              <v-btn v-model.number="autoHighCubes" v-on:click="autoHighCubes++"> + </v-btn>
             </v-row>
           </v-container>
           <v-container>
             <v-row justify="space-between"
-              ><v-btn v-on:click="autoMidCubes--"> - </v-btn>
+              ><v-btn v-model.number="autoMidCubes" v-on:click="autoMidCubes--"> - </v-btn>
               {{ autoMidCubes + " Mid" }}
-              <v-btn v-on:click="autoMidCubes++"> + </v-btn></v-row
+              <v-btn v-model.number="autoMidCubes" v-on:click="autoMidCubes++"> + </v-btn></v-row
             >
           </v-container>
           <v-container>
             <v-row justify="space-between">
-              <v-btn v-on:click="autoLowCubes--"> - </v-btn>
+              <v-btn v-model.number="autoLowCubes" v-on:click="autoLowCubes--"> - </v-btn>
               {{ autoLowCubes + " Low" }}
-              <v-btn v-on:click="autoLowCubes++"> + </v-btn>
+              <v-btn v-model.number="autoLowCubes" v-on:click="autoLowCubes++"> + </v-btn>
             </v-row>
           </v-container>
         </v-col>
@@ -128,23 +128,23 @@
               <h3 class>CONES</h3>
             </v-row>
             <v-row justify="space-between"
-              ><v-btn v-on:click="teleopHighCone--"> - </v-btn>
+              ><v-btn v-model.number="teleopHighCone" v-on:click="teleopHighCone--"> - </v-btn>
               {{ teleopHighCone + " High" }}
-              <v-btn v-on:click="teleopHighCone++"> + </v-btn>
+              <v-btn v-model.number="teleopHighCone" v-on:click="teleopHighCone++"> + </v-btn>
             </v-row>
           </v-container>
           <v-container>
             <v-row justify="space-between"
-              ><v-btn v-on:click="teleopMidCone--"> - </v-btn>
+              ><v-btn v-model.number="teleopMidCone" v-on:click="teleopMidCone--"> - </v-btn>
               {{ teleopMidCone + " Mid" }}
-              <v-btn v-on:click="teleopMidCone++"> + </v-btn></v-row
+              <v-btn v-model.number="teleopMidCone" v-on:click="teleopMidCone++"> + </v-btn></v-row
             >
           </v-container>
           <v-container>
             <v-row justify="space-between">
-              <v-btn v-on:click="teleopLowCone--"> - </v-btn>
+              <v-btn v-model.number="teleopLowCone" v-on:click="teleopLowCone--"> - </v-btn>
               {{ teleopLowCone + " Low" }}
-              <v-btn v-on:click="teleopLowCone++"> + </v-btn>
+              <v-btn v-model.number="teleopLowCone" v-on:click="teleopLowCone++"> + </v-btn>
             </v-row>
           </v-container>
         </v-col>
@@ -154,23 +154,23 @@
               <h3 class>CUBES</h3>
             </v-row>
             <v-row justify="space-between"
-              ><v-btn v-on:click="teleopHighCubes--"> - </v-btn>
+              ><v-btn v-model.number="teleopHighCubes" v-on:click="teleopHighCubes--"> - </v-btn>
               {{ teleopHighCubes + " High" }}
-              <v-btn v-on:click="teleopHighCubes++"> + </v-btn>
+              <v-btn v-model.number="teleopHighCubes" v-on:click="teleopHighCubes++"> + </v-btn>
             </v-row>
           </v-container>
           <v-container>
             <v-row justify="space-between"
-              ><v-btn v-on:click="teleopMidCubes--"> - </v-btn>
+              ><v-btn v-model.number="teleopMidCubes" v-on:click="teleopMidCubes--"> - </v-btn>
               {{ teleopMidCubes + " Mid" }}
-              <v-btn v-on:click="teleopMidCubes++"> + </v-btn></v-row
+              <v-btn v-model.number="teleopMidCubes" v-on:click="teleopMidCubes++"> + </v-btn></v-row
             >
           </v-container>
           <v-container>
             <v-row justify="space-between">
-              <v-btn v-on:click="teleopLowCubes--"> - </v-btn>
+              <v-btn v-model.number="teleopLowCubes" v-on:click="teleopLowCubes--"> - </v-btn>
               {{ teleopLowCubes + " Low" }}
-              <v-btn v-on:click="teleopLowCubes++"> + </v-btn>
+              <v-btn v-model.number="teleopLowCubes" v-on:click="teleopLowCubes++"> + </v-btn>
             </v-row>
           </v-container>
         </v-col>
@@ -256,8 +256,8 @@ export default {
     otherNotes: "",
     tickLabels: {
       0: "Not Engaged",
-      1: "Engaged",
-      2: "Docked",
+      1: "On, Not Balanced",
+      2: "Balanced",
     },
   }),
   methods: {
@@ -313,6 +313,20 @@ export default {
           otherNotes: otherNotes,
         });
         this.$refs.match_form.reset();
+        this.autoHighCone = 0;
+        this.autoHighCubes = 0;
+        this.autoLowCone = 0;
+        this.autoLowCubes = 0;
+        this.autoMidCone = 0;
+        this.autoMidCubes = 0;
+        this.teleopHighCone = 0;
+        this.teleopHighCubes = 0;
+        this.teleopLowCone = 0;
+        this.teleopLowCubes = 0;
+        this.teleopMidCone = 0;
+        this.teleopMidCubes = 0;
+        this.engageStatus = 0;
+        this.engageStatusAuto = 0;
       } catch (error) {
         console.error("Error writing document: ", error);
         this.isDocumentError = true;

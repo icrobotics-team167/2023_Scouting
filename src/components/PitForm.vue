@@ -232,10 +232,10 @@ export default {
   methods: {
     addPitData(
       number,
+      scoutName,
       rookie,
       coach,
       driveBase,
-      scoutName,
       leaveCommunity,
       autoHigh,
       autoMid,
